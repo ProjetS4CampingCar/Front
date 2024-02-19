@@ -1,162 +1,32 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div class="flex font-sans">
-    <div class="flex-none w-48 relative">
-      <img src="" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+  <div class="bg-white grid grid-flow-rows grid-cols-2 gap-4 sm:grid-cols-4" >
+    <div 
+    class="mx-auto px-4 border-l-4 border-black box-content text-black text-nowrap" 
+    v-for="(material, index) in materials" :key="index">
+      <img src="C:\Users\jojoe\Documents\USMB\Project\S4\logo\RentaVan\bleu\logo.png" alt="test">
+      <div class="underline decoration-violet-500 hover:no-underline hover:text-violet-500 cursor-pointer"> <!-- Added text-purple-500 class -->
+        {{ material.name }}
+      </div>
+      <div>          
+        {{ material.price }}€/j
+      </div>
     </div>
-    <form class="flex-auto p-6">
-      <div class="flex flex-wrap">
-        <h1 class="flex-auto text-lg font-semibold text-slate-900">
-          Utility Jacket
-        </h1>
-        <div class="text-lg font-semibold text-slate-500">
-          $110.00
-        </div>
-        <div class="w-full flex-none text-sm font-medium text-slate-700 mt-2">
-          In stock
-        </div>
-      </div>
-      <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
-        <div class="space-x-2 flex text-sm">
-          <label>
-            <input class="sr-only peer" name="size" type="radio" value="xs" checked />
-            <div
-              class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-700 peer-checked:font-semibold peer-checked:bg-slate-900 peer-checked:text-white">
-              XS
-            </div>
-          </label>
-          <label>
-            <input class="sr-only peer" name="size" type="radio" value="s" />
-            <div
-              class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-700 peer-checked:font-semibold peer-checked:bg-slate-900 peer-checked:text-white">
-              S
-            </div>
-          </label>
-          <label>
-            <input class="sr-only peer" name="size" type="radio" value="m" />
-            <div
-              class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-700 peer-checked:font-semibold peer-checked:bg-slate-900 peer-checked:text-white">
-              M
-            </div>
-          </label>
-          <label>
-            <input class="sr-only peer" name="size" type="radio" value="l" />
-            <div
-              class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-700 peer-checked:font-semibold peer-checked:bg-slate-900 peer-checked:text-white">
-              L
-            </div>
-          </label>
-          <label>
-            <input class="sr-only peer" name="size" type="radio" value="xl" />
-            <div
-              class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-700 peer-checked:font-semibold peer-checked:bg-slate-900 peer-checked:text-white">
-              XL
-            </div>
-          </label>
-        </div>
-      </div>
-      <div class="flex space-x-4 mb-6 text-sm font-medium">
-        <div class="flex-auto flex space-x-4">
-          <button class="h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
-            Buy now
-          </button>
-          <button class="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button">
-            Add to bag
-          </button>
-        </div>
-        <button
-          class="flex-none flex items-center justify-center w-9 h-9 rounded-md text-slate-300 border border-slate-200"
-          type="button" aria-label="Like">
-          <svg width="20" height="20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-              d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
-          </svg>
-        </button>
-      </div>
-      <p class="text-sm text-slate-700">
-        Free shipping on all continental US orders.
-      </p>
-    </form>
   </div>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}</style>
+<script>
+export default {
+  data() {
+    return {
+      materials: [
+        { name: 'Vélo Enfant', description: 'Description 1', price: '15', state : 'good' },
+        { name: 'Material 2', description: 'Description 2', price: '20', state: 'bad' },
+        { name: 'Material 3', description: 'Description 3', price: '20', state: 'bad' },
+        { name: 'Material 4', description: 'Description 4', price: '20', state: 'bad' },
+        { name: 'Material 5', description: 'Description 5', price: '20', state: 'bad' },
+        // Add more materials as needed
+      ],
+    };
+  },
+};
+</script>
