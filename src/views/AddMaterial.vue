@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import axios from 'axios';
-import { ref } from 'vue'; // Import ref from Vue
+import { ref } from 'vue'; 
 
 const name = ref('');
 const description = ref('');
 const price = ref('');
 const state = ref('');
 const category = ref('');
-
-
+const errorMessage = ref('')
 
 function add(){
+  if (!name.value || !description.value || !price.value || !state.value || !category.value) {
+    errorMessage.value = "Veuillez remplir tous les champs.";
+    return;
+  }
   const data = {
     name : name.value,
     description: description.value,
@@ -21,14 +24,20 @@ function add(){
   console.log(data)
   axios.post("http://localhost:3008/api/materials", data).then(response =>{
     console.log("Material créé: ", response.data);
+    name.value = '';
+    description.value = '';
+    price.value = '';
+    state.value = '';
+    category.value = '';
+    errorMessage.value = '';
+    /* generateQRCodeWithID(id, name);
     alert("Matériel ajouté");
-    window.location.href= "./home"
+    window.location.href= "./home" */
   }).catch(error => {
     console.error("Erreur lors de la création du matériel: ", error);
+    errorMessage.value = "Erreur lors de la création du matériel. Veuillez réessayer.";
   });
 }
-
-
 </script>
 
 <!-- TODO : créer le header -->
@@ -45,18 +54,18 @@ function add(){
 
 -->
 <template>
-    <div class='flex flex-col column-1'>
+    <div class='flex flex-col justify-center'>
       <label> Nom de l'objet : </label>
-      <input class="text-black" v-model='name' type='text' /> 
+      <input class="text-black border-b border-black focus:border-b focus:outline-none" v-model='name' type='text' /> 
 
       <label> Description de l'objet : </label>
-      <textarea class="text-black" v-model='description'> </textarea>
+      <input class="text-black border-b border-black focus:border-b focus:outline-none" v-model='description'/>
 
       <label> Prix de l'objet : </label>
-      <input class="text-black" type='number'  v-model='price'/>
+      <input class="text-black border-b border-black focus:border-b focus:outline-none" type='number'  v-model='price'/>
 
       <label> Etat de l'objet : </label>
-      <select class="border-white text-black" v-model='state'>
+      <select class="text-black border-b border-black focus:border-b focus:outline-none" v-model='state'>
           <option value="Neuf">Nouveau</option>
           <option value="Trés Bon Etat">Très bon état</option>
           <option value="Bon Etat">Bon état</option>
@@ -64,14 +73,14 @@ function add(){
       </select>
 
       <label> Catégorie : </label>
-      <select class="border-white text-black" v-model='category'>
+      <select class="border-white text-black border-b border-black focus:border-b focus:outline-none" v-model='category'>
           <option value="Neuf">Equipement Camping</option>
           <option value="Trés Bon Etat">Equipement Tente</option>
           <option value="Bon Etat">Equipement Voiture</option>
           <option value="Mauvais Etat">Equipement Nature</option>
       </select>
-
-      <input type='submit' @click='add()' value='Ajouter cet objet' class="border-none bg-white w-1/4 text-black"/> 
+        <p>{{ errorMessage }}</p>
+      <input type='submit' @click='add()' value='Ajouter cet objet' class=""/> 
     </div>
 </template>
 
