@@ -61,7 +61,10 @@ function add(){
       <label> Description de l'objet : </label>
       <input class="text-black border-b border-black focus:border-b focus:outline-none" v-model='description'/>
 
-      <label> Prix de l'objet : </label>
+      <label> Image de l'objet : </label>
+      <input class="text-black border-b border-black focus:border-b focus:outline-none" type='file'/> 
+
+      <label> Prix de la réservation à la journée : </label>
       <input class="text-black border-b border-black focus:border-b focus:outline-none" type='number'  v-model='price'/>
 
       <label> Etat de l'objet : </label>
@@ -79,6 +82,7 @@ function add(){
           <option value="Bon Etat">Equipement Voiture</option>
           <option value="Mauvais Etat">Equipement Nature</option>
       </select>
+
         <p>{{ errorMessage }}</p>
       <input type='submit' @click='add()' value='Ajouter cet objet' class=""/> 
     </div>
