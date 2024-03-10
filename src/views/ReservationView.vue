@@ -3,19 +3,7 @@
 <script setup >
   import { ref } from 'vue'
   
-  // hard coded material choices
-  const articles = ref([{
-      id: 1,
-      name: "article 1"
-    },
-    {
-      id: 2,
-      name: "article 2"
-    },
-    {
-      id: 3,
-      name: "article 3"
-    }]);
+  const articles = ref(null);
 
   // contains the date for the reservation that the user want to do
   const reservation = ref({
@@ -69,6 +57,17 @@
     return true;
   }
 
+  async function getThreeFirstMaterials(){
+    let res = await fetch("http://localhost:3008/api/materials/")
+    let value = await res.json();
+    if (value.length >= 3) {
+      articles.value = value.slice(0,3);
+    } else {
+      articles.value = value;
+    }
+  }
+
+  getThreeFirstMaterials();
 </script>
 
 <template>
