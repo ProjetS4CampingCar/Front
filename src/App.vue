@@ -4,7 +4,7 @@
 
     <div class="wrapper">
       <HelloWorld msg="Nom du projet"></HelloWorld>
-  
+
       <nav>
         <RouterLink v-if="!isConnect" to="/inscription">Inscription</RouterLink>
         <RouterLink v-if="!isConnect" to="/login">Connexion</RouterLink>
@@ -12,10 +12,10 @@
         <RouterLink to="/material/add">Ajouter un materiel</RouterLink>
         <RouterLink to="/reservation">Reserver du materiel</RouterLink>
         <div v-if="isConnect">
-          <a @click="logout(true)">Déconnexion</a> <br>   
-         <h2 class="mb-4 text-1xl font-medium m-10"> Bonjour {{ username }} {{ userLastname }}</h2>
+          <a @click="logout(true)">Déconnexion</a> <br>
+          <h2 class="mb-4 text-1xl font-medium m-10"> Bonjour {{ username }} {{ userLastname }}</h2>
         </div>
-    
+
 
 
       </nav>
