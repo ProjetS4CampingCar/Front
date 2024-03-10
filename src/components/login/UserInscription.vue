@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md  max-w-sm ">
+    <div class="w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md   ">
         <span class="mb-4 text-5xl font-medium m-10 ">Résa-Nature</span>
         <div class="w-full max-w-xs">
             <form class="flex flex-col items-start">
@@ -74,7 +74,6 @@
 import axios from 'axios'
 import { verifConnect } from '../../js/utils.js';
 
-
 export default {
     name: "UserInscription",
     date() {
@@ -111,9 +110,14 @@ export default {
 
                     // Stocke le token JWT et l'ID de l'utilisateur localement
                     localStorage.setItem('token', token);
-                    // localStorage.setItem('userId', userId);
-                    location.reload()
 
+                    axios.post("http://localhost:3008/api/login", data).then(response => {
+                        const { token, userId } = response.data;
+
+                        // Stocke le token JWT et l'ID de l'utilisateur localement
+                        localStorage.setItem('token', token);
+                        window.location.reload();
+                    })
                 })
             } catch (error) {
                 console.log(error)

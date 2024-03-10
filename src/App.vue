@@ -3,15 +3,19 @@
     <img alt="Vue logo" class="logo" src="@/assets/camping_car.png" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="Nom du projet" />
-
+      <HelloWorld msg="Nom du projet">
       <nav>
         <RouterLink v-if="!isConnect" to="/inscription">Inscription</RouterLink>
         <RouterLink v-if="!isConnect" to="/connexion">Connexion</RouterLink>
         <RouterLink v-else to="/">Accueil</RouterLink>
         <RouterLink to="/material/add">Ajouter un materiel</RouterLink>
         <RouterLink to="/reservation">Reserver du materiel</RouterLink>
-        <div v-if="isConnect">Bonjour {{ username }} {{ userLastname }}</div>
+        <div v-if="isConnect">
+          Bonjour {{ username }} {{ userLastname }}
+          <a @click="logout(true)">Déconnexion</a>
+        </div>
+        <RouterLink to="/">Accueil</RouterLink>
+
 
       </nav>
     </div>
@@ -42,7 +46,6 @@ const getInfoUser = async (token) => {
     if (response.data.foundUser) {
       return response.data.foundUser;
     } else {
-      axios.delete("http://localhost:3008/api/infoUser/" + localStorage.getItem('token'));
       return false;
     }
   } catch (error) {
@@ -51,9 +54,15 @@ const getInfoUser = async (token) => {
   }
 }
 
-const logout = () => {
+const logout = (click) => {
+  axios.delete("http://localhost:3008/api/infoUser/" + localStorage.getItem('token'));
+
   localStorage.removeItem('token');
   localStorage.removeItem('infoUser');
+
+  if (click) {
+    window.location.reload();
+  }
 };
 
 const checkConnection = async () => {
@@ -74,7 +83,7 @@ const checkConnection = async () => {
       localStorage.setItem("infoUser", JSON.stringify(infoUser));
       isConnect.value = true;
     } else {
-      logout();
+      logout(false);
     }
   }
 }

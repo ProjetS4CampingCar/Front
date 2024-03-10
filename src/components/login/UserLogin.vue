@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md  max-w-sm ">
+    <div class="w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md ">
         <span class="mb-4 text-5xl font-medium m-10 ">Résa-Nature</span>
         <div class="w-full max-w-xs">
             <form class="flex flex-col items-start">
@@ -88,7 +88,7 @@ export default {
 
                     // Stocke le token JWT et l'ID de l'utilisateur localement
                     localStorage.setItem('token', token);
-                    location.reload()
+                    window.location.reload();
                 })
             } catch (error) {
                 console.log(error)
