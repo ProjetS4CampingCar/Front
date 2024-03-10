@@ -76,7 +76,6 @@ getThreeFirstMaterials();
   <main class='w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md p-5'>
 
     <form class='flex flex-col items-start' @submit.prevent="makeReservation">
-
       <!-- Materials to choose (by id) -->
       <div>
         <legend class="mb-4 text-2xl font-medium text-center">Choisir un ou plusieurs articles à reserver</legend>
@@ -97,11 +96,11 @@ getThreeFirstMaterials();
         <input type="date" name="end" v-model=reservation.end class= "w-full shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
 
 
-      <!-- Submit button -->
-      <div class=" w-full flex flex-col items-center">
-        <button class="w-80 items-center bg-purple-500 mt-2 mb-2 rounded-md text-white h-8" type="submit">Reserver</button>
+        <!-- Submit button -->
+        <div class=" w-full flex flex-col items-center">
+          <button class="w-80 items-center bg-purple-500 mt-2 mb-2 rounded-md text-white h-8" type="submit">Reserver</button>
+        </div>
       </div>
-     
     </form>
 
     <!-- Display error message -->
@@ -113,7 +112,7 @@ getThreeFirstMaterials();
       et finit le {{ reservationValidated.end }},
       pour un total de {{ reservationValidated.total_price }} euros.
     </p>
-
+ 
   </main>
 </template>
 

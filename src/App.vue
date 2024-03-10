@@ -3,7 +3,8 @@
     <img alt="Vue logo" class="logo" src="@/assets/camping_car.png" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="Nom du projet">
+      <HelloWorld msg="Nom du projet"></HelloWorld>
+  
       <nav>
         <RouterLink v-if="!isConnect" to="/inscription">Inscription</RouterLink>
         <RouterLink v-if="!isConnect" to="/connexion">Connexion</RouterLink>
