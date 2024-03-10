@@ -72,31 +72,32 @@
 </script>
 
 <template>
-  <main>
+  <main class='w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md p-5'>
 
     <form @submit.prevent="makeReservation">
 
       <!-- Materials to choose (by id) -->
       <fieldset>
-      <legend>Choisir un ou plusieurs articles à reserver</legend>
+      <legend class="mb-4 text-2xl font-medium text-center">Choisir un ou plusieurs articles à reserver</legend>
 
       <!-- create check box matching the variable articles -->
       <div v-for="article in articles" :key="article.id">
-        <input type="checkbox" :id=article.id.toString() :name=article.name :value="article.id" v-model="reservation.id_materials"/>
-        <label :for=article.name>{{ article.name }}</label>
+        <input class="w-5 mr-2 inline-block align-middle text-black rounded-md h-8 px-4" type="checkbox" :id=article.id.toString() :name=article.name :value="article.id" v-model="reservation.id_materials"/>
+        <label class="mb-2 " :for=article.name>{{ article.name }}</label>
       </div>
       </fieldset>
 
       <!-- Date picker -->
-      <div id="dates">
-        <label for="start">De but de la reservation</label>
-        <input type="date" name="start" v-model=reservation.start class="border-b border-black focus:border-b focus:outline-none">
-        <label for="end">Fin de la reservation</label>
-        <input type="date" name="end" v-model=reservation.end class="border-b border-black focus:border-b focus:outline-none">
+      <div class="w-40 flex flex-col">
+        <label  class="mb-2" for="start">Debut de la reservation</label>
+        <input type="date" name="start" v-model=reservation.start class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
+        <label  class="mb-2 " for="end">Fin de la reservation</label>
+        <input type="date" name="end" v-model=reservation.end class= "shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
+      
       </div>
 
       <!-- Submit button -->
-      <button type="submit">Reserver</button>
+      <button class="w-80 bg-purple-500 mt-2 mb-2 rounded-md text-white h-8" type="submit">Reserver</button>
     </form>
 
     <!-- Display error message -->
@@ -115,10 +116,6 @@
 <style>
 
 /* display dates in column */
-#dates {
-  display: flex;
-  flex-direction: column;
-  width: 10rem;
-}
+
 
 </style>

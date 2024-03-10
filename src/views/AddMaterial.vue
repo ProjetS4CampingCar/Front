@@ -31,9 +31,8 @@ function add(){
     state.value = '';
     cat.value = '';
     errorMessage.value = '';
-    /* generateQRCodeWithID(id, name);
     alert("Matériel ajouté");
-    window.location.href= "./home" */
+    window.location.href= "./home" 
   }).catch(error => {
     console.error("Erreur lors de la création du matériel: ", error);
     errorMessage.value = "Erreur lors de la création du matériel. Veuillez réessayer.";
@@ -55,22 +54,22 @@ function add(){
 
 -->
 <template>
-    <div class='w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md max-w-sm p-5'>
+    <div class='w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md p-5'>
       <h3 class="mb-4 text-3xl font-medium m-10">Ajouter un objet</h3>
       <div class="flex flex-col items-start">
-        <label class="mb-2 text-gray-400"> Nom de l'objet : </label>
+        <label class="mb-2 text-black-400"> Nom de l'objet : </label>
         <input class="tshadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='name' type='text' /> 
 
-        <label class="mb-2 text-gray-400"> Description de l'objet : </label>
+        <label class="mb-2 text-black-400"> Description de l'objet : </label>
         <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='description'/>
 
-        <label class="mb-2 text-gray-400"> Image de l'objet : </label>
+        <label class="mb-2 text-black-400"> Image de l'objet : </label>
         <input class=" w-full mb-1 text-black rounded-md h-8 px-4" type='file'/> 
 
-        <label class="mb-2 text-gray-400"> Prix de la réservation à la journée : </label>
+        <label class="mb-2 text-black-400"> Prix de la réservation à la journée : </label>
         <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" type='number'  v-model='price'/>
 
-        <label class="mb-2 text-gray-400"> Catégorie : </label>
+        <label class="mb-2 text-black-400"> Catégorie : </label>
         <select class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='cat'>
             <option value="Equipement Camping">Equipement Camping</option>
             <option value="Equipement Tente">Equipement Tente</option>
@@ -78,7 +77,7 @@ function add(){
             <option value="Equipement Nature">Equipement Nature</option>
         </select>
 
-        <label class="mb-2 text-gray-400"> Etat de l'objet : </label>
+        <label class="mb-2 text-black-400"> Etat de l'objet : </label>
         <select class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='state'>
             <option value="Neuf">Nouveau</option>
             <option value="Trés Bon Etat">Très bon état</option>
