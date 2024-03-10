@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-tertiary grid grid-flow-rows grid-cols-2 gap-4 sm:grid-cols-4 ">
+  <div class="bg-tertiary grid grid-flow-rows grid-cols-2 gap-4 sm:grid-cols-3 ">
     <div
       :class="{ 'col-span-full': clickedElement === id }"
       class="flex flex-row"
