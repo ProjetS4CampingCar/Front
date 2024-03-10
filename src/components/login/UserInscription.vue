@@ -110,9 +110,14 @@ export default {
 
                     // Stocke le token JWT et l'ID de l'utilisateur localement
                     localStorage.setItem('token', token);
-                    // localStorage.setItem('userId', userId);
-                    this.$router.push('/login')
 
+                    axios.post("http://localhost:3008/api/login", data).then(response => {
+                        const { token, userId } = response.data;
+
+                        // Stocke le token JWT et l'ID de l'utilisateur localement
+                        localStorage.setItem('token', token);
+                        window.location.reload();
+                    })
                 })
             } catch (error) {
                 console.log(error)

@@ -3,19 +3,10 @@
 <script setup>
 import { ref } from 'vue'
 
+const articles = ref(null);
+
 // hard coded material choices
-const articles = ref([{
-  id: 1,
-  name: "article 1"
-},
-{
-  id: 2,
-  name: "article 2"
-},
-{
-  id: 3,
-  name: "article 3"
-}]);
+
 
 // contains the date for the reservation that the user want to do
 const reservation = ref({
@@ -87,34 +78,16 @@ getThreeFirstMaterials();
     <form @submit.prevent="makeReservation">
 
       <!-- Materials to choose (by id) -->
-      <fieldset>
-        <legend>Choisir un ou plusieurs articles à reserver</legend>
-
-        <!-- create check box matching the variable articles -->
-        <div v-for="article in articles" :key="article.id">
-          <input type="checkbox" :id=article.id.toString() :name=article.name :value="article.id"
-            v-model="reservation.id_materials" />
-          <label :for=article.name>{{ article.name }}</label>
-        </div>
-      </fieldset>
-
-      <!-- Date picker -->
-      <div id="dates">
-        <label for="start">De but de la reservation</label>
-        <input type="date" name="start" v-model=reservation.start
-          class="border-b border-black focus:border-b focus:outline-none">
-        <label for="end">Fin de la reservation</label>
-        <input type="date" name="end" v-model=reservation.end
-          class="border-b border-black focus:border-b focus:outline-none">
-        =======
+      <div>
         <legend class="mb-4 text-2xl font-medium text-center">Choisir un ou plusieurs articles à reserver</legend>
 
         <!-- create check box matching the variable articles -->
-        <div v-for="article in articles" :key="article.id">
-          <input class="w-5 mr-2 inline-block align-middle text-black rounded-md h-8 px-4" type="checkbox"
-            :id=article.id.toString() :name=article.name :value="article.id" v-model="reservation.id_materials" />
-          <label class="mb-2" :for=article.name>{{ article.name }}, {{ article.price }} euros / jours</label>
-        </div>
+        <fieldset>
+          <div v-for="article in articles" :key="article.id">
+            <input class="w-5 mr-2 inline-block align-middle text-black rounded-md h-8 px-4" type="checkbox"
+              :id=article.id :name=article.name :value="article.id" v-model="reservation.id_materials" />
+            <label class="mb-2" :for=article.name>{{ article.name }}, {{ article.price }} euros / jours</label>
+          </div>
         </fieldset>
 
         <!-- Date picker -->
@@ -125,12 +98,10 @@ getThreeFirstMaterials();
           <label class="mb-2 " for="end">Fin de la reservation</label>
           <input type="date" name="end" v-model=reservation.end
             class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
-
-          >>>>>>> 376a9362f63d9b9e7330274f7bab4a97ec57e899
         </div>
-
         <!-- Submit button -->
         <button class="w-80 bg-purple-500 mt-2 mb-2 rounded-md text-white h-8" type="submit">Reserver</button>
+      </div>
     </form>
 
     <!-- Display error message -->
@@ -148,11 +119,9 @@ getThreeFirstMaterials();
 
 <style>
 /* display dates in column */
-<<<<<<< HEAD #dates {
+#dates {
   display: flex;
   flex-direction: column;
   width: 10rem;
 }
-
-=======>>>>>>>376a9362f63d9b9e7330274f7bab4a97ec57e899
 </style>

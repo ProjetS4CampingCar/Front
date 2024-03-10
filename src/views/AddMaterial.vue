@@ -10,7 +10,7 @@ const cat = ref('');
 const errorMessage = ref('')
 
 function add() {
-  if (!name.value || !description.value || !price.value || !state.value || !category.value) {
+  if (!name.value || !description.value || !price.value || !state.value || !cat.value) {
     errorMessage.value = "Veuillez remplir tous les champs.";
     return;
   }
@@ -54,36 +54,39 @@ function add() {
 
 -->
 <template>
-  <div class='flex flex-col justify-center'>
-    <label> Nom de l'objet : </label>
-    <input class="text-black border-b border-black focus:border-b focus:outline-none" v-model='name' type='text' />
+  <div class='w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md p-5'>
+    <h3 class="mb-4 text-3xl font-medium m-10">Ajouter un objet</h3>
+    <div class="flex flex-col items-start">
+      <label class="mb-2 text-black-400"> Nom de l'objet : </label>
+      <input class="tshadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='name' type='text' />
 
-    <label> Description de l'objet : </label>
-    <input class="text-black border-b border-black focus:border-b focus:outline-none" v-model='description' />
+      <label class="mb-2 text-black-400"> Description de l'objet : </label>
+      <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='description' />
 
-    <label> Image de l'objet : </label>
-    <input class="text-black border-b border-black focus:border-b focus:outline-none" type='file' />
+      <label class="mb-2 text-black-400"> Image de l'objet : </label>
+      <input class=" w-full mb-1 text-black rounded-md h-8 px-4" type='file' />
 
-    <label> Prix de la réservation à la journée : </label>
-    <input class="text-black border-b border-black focus:border-b focus:outline-none" type='number' v-model='price' />
+      <label class="mb-2 text-black-400"> Prix de la réservation à la journée : </label>
+      <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" type='number' v-model='price' />
 
-    <label> Etat de l'objet : </label>
-    <select class="text-black border-b border-black focus:border-b focus:outline-none" v-model='state'>
-      <option value="Neuf">Nouveau</option>
-      <option value="Trés Bon Etat">Très bon état</option>
-      <option value="Bon Etat">Bon état</option>
-      <option value="Mauvais Etat">Mauvais état</option>
-    </select>
+      <label class="mb-2 text-black-400"> Catégorie : </label>
+      <select class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='cat'>
+        <option value="Equipement Camping">Equipement Camping</option>
+        <option value="Equipement Tente">Equipement Tente</option>
+        <option value="Equipement Voiture">Equipement Voiture</option>
+        <option value="Equipement Nature">Equipement Nature</option>
+      </select>
 
-    <label> Catégorie : </label>
-    <select class="border-white text-black border-b border-black focus:border-b focus:outline-none" v-model='category'>
-      <option value="Neuf">Equipement Camping</option>
-      <option value="Trés Bon Etat">Equipement Tente</option>
-      <option value="Bon Etat">Equipement Voiture</option>
-      <option value="Mauvais Etat">Equipement Nature</option>
-    </select>
-
-    <p>{{ errorMessage }}</p>
-    <input type='submit' @click='add()' value='Ajouter cet objet' class="" />
+      <label class="mb-2 text-black-400"> Etat de l'objet : </label>
+      <select class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='state'>
+        <option value="Neuf">Nouveau</option>
+        <option value="Trés Bon Etat">Très bon état</option>
+        <option value="Bon Etat">Bon état</option>
+        <option value="Mauvais Etat">Mauvais état</option>
+      </select>
+      <p>{{ errorMessage }}</p>
+    </div>
+    <input type='submit' @click='add()' value='Ajouter cet objet'
+      class="w-80 bg-purple-500 mt-2 mb-2 rounded-md text-white h-8" />
   </div>
 </template>
