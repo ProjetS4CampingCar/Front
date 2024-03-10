@@ -82,7 +82,7 @@
       <!-- create check box matching the variable articles -->
       <div v-for="article in articles" :key="article.id">
         <input type="checkbox" :id=article.id.toString() :name=article.name :value="article.id" v-model="reservation.id_materials"/>
-        <label :for=article.name>{{ article.name }}</label>
+        <label :for=article.name>{{ article.name }}, {{ article.price }} euros / jours</label>
       </div>
       </fieldset>
 
