@@ -6,13 +6,11 @@
       <HelloWorld msg="Nom du projet" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/addmaterials">Ajouter un materiel</RouterLink>
-        <RouterLink to="/reservation">Reserver du materiel</RouterLink>
         <RouterLink v-if="!isConnect" to="/inscription">Inscription</RouterLink>
         <RouterLink v-if="!isConnect" to="/connexion">Connexion</RouterLink>
         <RouterLink v-else to="/">Accueil</RouterLink>
+        <RouterLink to="/addmaterials">Ajouter un materiel</RouterLink>
+        <RouterLink to="/reservation">Reserver du materiel</RouterLink>
         <div v-if="isConnect">Bonjour {{ username }} {{ userLastname }}</div>
 
       </nav>
