@@ -3,19 +3,7 @@
 <script setup >
   import { ref } from 'vue'
   
-  // hard coded material choices
-  const articles = ref([{
-      id: 1,
-      name: "article 1"
-    },
-    {
-      id: 2,
-      name: "article 2"
-    },
-    {
-      id: 3,
-      name: "article 3"
-    }]);
+  const articles = ref(null);
 
   // contains the date for the reservation that the user want to do
   const reservation = ref({
@@ -69,6 +57,17 @@
     return true;
   }
 
+  async function getThreeFirstMaterials(){
+    let res = await fetch("http://localhost:3008/api/materials/")
+    let value = await res.json();
+    if (value.length >= 3) {
+      articles.value = value.slice(0,3);
+    } else {
+      articles.value = value;
+    }
+  }
+
+  getThreeFirstMaterials();
 </script>
 
 <template>
@@ -83,7 +82,7 @@
       <!-- create check box matching the variable articles -->
       <div v-for="article in articles" :key="article.id">
         <input class="w-5 mr-2 inline-block align-middle text-black rounded-md h-8 px-4" type="checkbox" :id=article.id.toString() :name=article.name :value="article.id" v-model="reservation.id_materials"/>
-        <label class="mb-2 " :for=article.name>{{ article.name }}</label>
+        <label  class="mb-2" :for=article.name>{{ article.name }}, {{ article.price }} euros / jours</label>
       </div>
       </fieldset>
 
