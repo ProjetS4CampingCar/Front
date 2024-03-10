@@ -46,7 +46,7 @@ const router = createRouter({
       component: () => import('../views/ReservationView.vue')
     },
     {
-      path: '/addmaterials',
+      path: '/material/add',
       name: 'addmaterials',
       component: AddMaterialVue
     }

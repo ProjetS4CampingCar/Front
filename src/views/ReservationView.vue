@@ -73,7 +73,7 @@
 <template>
   <main class='w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md p-5'>
 
-    <form @submit.prevent="makeReservation">
+    <form class='flex flex-col items-start' @submit.prevent="makeReservation">
 
       <!-- Materials to choose (by id) -->
       <fieldset>
@@ -87,16 +87,17 @@
       </fieldset>
 
       <!-- Date picker -->
-      <div class="w-40 flex flex-col">
         <label  class="mb-2" for="start">Debut de la reservation</label>
-        <input type="date" name="start" v-model=reservation.start class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
+        <input type="date" name="start" v-model=reservation.start class="w-full shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
         <label  class="mb-2 " for="end">Fin de la reservation</label>
-        <input type="date" name="end" v-model=reservation.end class= "shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
-      
-      </div>
+        <input type="date" name="end" v-model=reservation.end class= "w-full shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
+
 
       <!-- Submit button -->
-      <button class="w-80 bg-purple-500 mt-2 mb-2 rounded-md text-white h-8" type="submit">Reserver</button>
+      <div class=" w-full flex flex-col items-center">
+        <button class="w-80 items-center bg-purple-500 mt-2 mb-2 rounded-md text-white h-8" type="submit">Reserver</button>
+      </div>
+     
     </form>
 
     <!-- Display error message -->

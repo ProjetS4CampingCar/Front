@@ -9,7 +9,7 @@
         <RouterLink v-if="!isConnect" to="/inscription">Inscription</RouterLink>
         <RouterLink v-if="!isConnect" to="/connexion">Connexion</RouterLink>
         <RouterLink v-else to="/">Accueil</RouterLink>
-        <RouterLink to="/addmaterials">Ajouter un materiel</RouterLink>
+        <RouterLink to="/material/add">Ajouter un materiel</RouterLink>
         <RouterLink to="/reservation">Reserver du materiel</RouterLink>
         <div v-if="isConnect">Bonjour {{ username }} {{ userLastname }}</div>
 
@@ -103,7 +103,7 @@ nav {
 }
 
 nav a.router-link-exact-active {
-  color: var(--color-text);
+  color: gray;
 }
 
 nav a.router-link-exact-active:hover {

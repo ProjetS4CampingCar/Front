@@ -40,23 +40,10 @@ function add(){
 }
 </script>
 
-<!-- TODO : créer le header -->
-<!-- 
-<script setup lang="ts">
-    import Header from '../components/header.vue'
-</script> 
-
-<template>
-  <main>
-    <Header />
-  </main>
-</template>
-
--->
 <template>
     <div class='w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md p-5'>
       <h3 class="mb-4 text-3xl font-medium m-10">Ajouter un objet</h3>
-      <div class="flex flex-col items-start">
+      <div class="flex flex-col items-start w-full">
         <label class="mb-2 text-black-400"> Nom de l'objet : </label>
         <input class="tshadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='name' type='text' /> 
 
@@ -64,7 +51,7 @@ function add(){
         <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='description'/>
 
         <label class="mb-2 text-black-400"> Image de l'objet : </label>
-        <input class=" w-full mb-1 text-black rounded-md h-8 px-4" type='file'/> 
+        <input class="w-full mb-1 text-black rounded-md h-8 px-4" type='file'/> 
 
         <label class="mb-2 text-black-400"> Prix de la réservation à la journée : </label>
         <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" type='number'  v-model='price'/>
@@ -73,16 +60,17 @@ function add(){
         <select class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='cat'>
             <option value="Equipement Camping">Equipement Camping</option>
             <option value="Equipement Tente">Equipement Tente</option>
-            <option value="Equipement Voiture">Equipement Voiture</option>
-            <option value="Equipement Nature">Equipement Nature</option>
+            <option value="Equipement Divertissement">Equipement Divertissement</option>
+            <option value="Equipement Plein air">Equipement Plein air</option>
+            <option value="Equipement Sécurité">Equipement Sécurité</option>
         </select>
 
         <label class="mb-2 text-black-400"> Etat de l'objet : </label>
         <select class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='state'>
-            <option value="Neuf">Nouveau</option>
-            <option value="Trés Bon Etat">Très bon état</option>
+            <option value="Neuf">Neuf</option>
+            <option value="Très Bon Etat">Très bon état</option>
             <option value="Bon Etat">Bon état</option>
-            <option value="Mauvais Etat">Mauvais état</option>
+            <option value="Satisfaisant">Satisfaisant</option>
         </select>
         <p>{{ errorMessage }}</p>
       </div>
