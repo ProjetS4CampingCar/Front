@@ -6,7 +6,7 @@ const name = ref('');
 const description = ref('');
 const price = ref('');
 const state = ref('');
-const category = ref('');
+const cat = ref('');
 const errorMessage = ref('')
 
 function add() {
@@ -14,12 +14,13 @@ function add() {
     errorMessage.value = "Veuillez remplir tous les champs.";
     return;
   }
+  console.log(cat)
   const data = {
     name: name.value,
     description: description.value,
     price: price.value,
     state: state.value,
-    category: category.value
+    category: cat.value
   }
   console.log(data)
   axios.post("http://localhost:3008/api/materials", data).then(response => {
@@ -28,11 +29,10 @@ function add() {
     description.value = '';
     price.value = '';
     state.value = '';
-    category.value = '';
+    cat.value = '';
     errorMessage.value = '';
-    /* generateQRCodeWithID(id, name);
     alert("Matériel ajouté");
-    window.location.href= "./home" */
+    window.location.href = "./home"
   }).catch(error => {
     console.error("Erreur lors de la création du matériel: ", error);
     errorMessage.value = "Erreur lors de la création du matériel. Veuillez réessayer.";

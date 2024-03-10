@@ -68,10 +68,21 @@ async function makeReservation() {
   return true;
 }
 
+async function getThreeFirstMaterials() {
+  let res = await fetch("http://localhost:3008/api/materials/")
+  let value = await res.json();
+  if (value.length >= 3) {
+    articles.value = value.slice(0, 3);
+  } else {
+    articles.value = value;
+  }
+}
+
+getThreeFirstMaterials();
 </script>
 
 <template>
-  <main>
+  <main class='w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md p-5'>
 
     <form @submit.prevent="makeReservation">
 
@@ -95,10 +106,31 @@ async function makeReservation() {
         <label for="end">Fin de la reservation</label>
         <input type="date" name="end" v-model=reservation.end
           class="border-b border-black focus:border-b focus:outline-none">
-      </div>
+        =======
+        <legend class="mb-4 text-2xl font-medium text-center">Choisir un ou plusieurs articles à reserver</legend>
 
-      <!-- Submit button -->
-      <button type="submit">Reserver</button>
+        <!-- create check box matching the variable articles -->
+        <div v-for="article in articles" :key="article.id">
+          <input class="w-5 mr-2 inline-block align-middle text-black rounded-md h-8 px-4" type="checkbox"
+            :id=article.id.toString() :name=article.name :value="article.id" v-model="reservation.id_materials" />
+          <label class="mb-2" :for=article.name>{{ article.name }}, {{ article.price }} euros / jours</label>
+        </div>
+        </fieldset>
+
+        <!-- Date picker -->
+        <div class="w-40 flex flex-col">
+          <label class="mb-2" for="start">Debut de la reservation</label>
+          <input type="date" name="start" v-model=reservation.start
+            class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
+          <label class="mb-2 " for="end">Fin de la reservation</label>
+          <input type="date" name="end" v-model=reservation.end
+            class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
+
+          >>>>>>> 376a9362f63d9b9e7330274f7bab4a97ec57e899
+        </div>
+
+        <!-- Submit button -->
+        <button class="w-80 bg-purple-500 mt-2 mb-2 rounded-md text-white h-8" type="submit">Reserver</button>
     </form>
 
     <!-- Display error message -->
@@ -116,9 +148,11 @@ async function makeReservation() {
 
 <style>
 /* display dates in column */
-#dates {
+<<<<<<< HEAD #dates {
   display: flex;
   flex-direction: column;
   width: 10rem;
 }
+
+=======>>>>>>>376a9362f63d9b9e7330274f7bab4a97ec57e899
 </style>
