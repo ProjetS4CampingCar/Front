@@ -21,6 +21,7 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
+<<<<<<< HEAD
       path: '/connexion',
       name: 'connexion',
       props: {
@@ -35,6 +36,14 @@ const router = createRouter({
         isConnect: await tokenValid()
       },
       component: UserInscriptionVue
+=======
+      path: '/reservation',
+      name: 'reservation',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ReservationView.vue')
+>>>>>>> 483165203c50b673908d3f31cd05caebe0699616
     }
   ]
 })
