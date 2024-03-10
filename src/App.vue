@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
@@ -13,12 +8,81 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink v-if="!isConnect" to="/inscription">Inscription</RouterLink>
+        <RouterLink v-if="!isConnect" to="/connexion">Connexion</RouterLink>
+        <RouterLink v-else to="/">Accueil</RouterLink>
+        <div v-if="isConnect">Bonjour {{ username }} {{ userLastname }}</div>
+
       </nav>
     </div>
   </header>
-
   <RouterView />
+
 </template>
+
+<script setup lang="ts">
+import { RouterLink, RouterView, useRouter } from 'vue-router';
+import HelloWorld from './components/HelloWorld.vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { tokenValid } from "./js/utils.js";
+
+const isConnect = ref(false);
+const username = ref("");
+const userLastname = ref("");
+
+const getInfoUser = async (token) => {
+
+  const headers = {
+    Authorization: `Bearer ${token}` // Ajoutez le token JWT dans les en-têtes de la requête
+  };
+
+  try {
+    const response = await axios.post("http://localhost:3008/api/infoUser", null, { headers });
+    if (response.data.foundUser) {
+      return response.data.foundUser;
+    } else {
+      axios.delete("http://localhost:3008/api/infoUser/" + localStorage.getItem('token'));
+      return false;
+    }
+  } catch (error) {
+    console.error("Erreur lors de la récupération des informations de l'utilisateur:", error);
+    throw error;
+  }
+}
+
+const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('infoUser');
+};
+
+const checkConnection = async () => {
+  const isValidToken = await tokenValid();
+  const user = localStorage.getItem('infoUser');
+
+  if (isValidToken && user) {
+    isConnect.value = true;
+    const infoUser = JSON.parse(user);
+    username.value = infoUser.name;
+    userLastname.value = infoUser.lastname;
+  } else {
+    const token = localStorage.getItem("token");
+    const infoUser = await getInfoUser(token);
+    if (infoUser) {
+      username.value = infoUser.name;
+      userLastname.value = infoUser.lastname;
+      localStorage.setItem("infoUser", JSON.stringify(infoUser));
+      isConnect.value = true;
+    } else {
+      logout();
+    }
+  }
+}
+
+onMounted(checkConnection);
+
+
+</script>
 
 <style scoped>
 header {
