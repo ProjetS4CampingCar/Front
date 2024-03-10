@@ -7,15 +7,15 @@
   
       <nav>
         <RouterLink v-if="!isConnect" to="/inscription">Inscription</RouterLink>
-        <RouterLink v-if="!isConnect" to="/connexion">Connexion</RouterLink>
+        <RouterLink v-if="!isConnect" to="/login">Connexion</RouterLink>
         <RouterLink v-else to="/">Accueil</RouterLink>
         <RouterLink to="/material/add">Ajouter un materiel</RouterLink>
         <RouterLink to="/reservation">Reserver du materiel</RouterLink>
         <div v-if="isConnect">
-          Bonjour {{ username }} {{ userLastname }}
-          <a @click="logout(true)">Déconnexion</a>
+          <a @click="logout(true)">Déconnexion</a> <br>   
+         <h2 class="mb-4 text-1xl font-medium m-10"> Bonjour {{ username }} {{ userLastname }}</h2>
         </div>
-        <RouterLink to="/">Accueil</RouterLink>
+    
 
 
       </nav>

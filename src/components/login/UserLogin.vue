@@ -1,6 +1,6 @@
 <template>
     <div class="w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md ">
-        <span class="mb-4 text-5xl font-medium m-10 ">Résa-Nature</span>
+        <span class="mb-4 text-3xl font-medium m-10 ">Connexion</span>
         <div class="w-full max-w-xs">
             <form class="flex flex-col items-start">
                 <label for="email" class="mb-2 text-gray-400">Email address</label>
