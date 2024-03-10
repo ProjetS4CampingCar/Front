@@ -11,9 +11,11 @@
         <RouterLink to="/addmaterials">Ajouter un materiel</RouterLink>
         <RouterLink to="/reservation">Reserver du materiel</RouterLink>
         <RouterLink v-if="!isConnect" to="/inscription">Inscription</RouterLink>
-        <RouterLink v-if="!isConnect" to="/connexion">Connexion</RouterLink>
-        <RouterLink v-else to="/">Accueil</RouterLink>
-        <div v-if="isConnect">Bonjour {{ username }} {{ userLastname }}</div>
+        <RouterLink v-if="!isConnect" to="/login">Login</RouterLink>
+        <div v-if="isConnect">
+          Bonjour {{ username }} {{ userLastname }}
+          <a @click="logout(true)">Logout</a>
+        </div>
 
       </nav>
     </div>
@@ -44,7 +46,6 @@ const getInfoUser = async (token) => {
     if (response.data.foundUser) {
       return response.data.foundUser;
     } else {
-      axios.delete("http://localhost:3008/api/infoUser/" + localStorage.getItem('token'));
       return false;
     }
   } catch (error) {
@@ -53,9 +54,15 @@ const getInfoUser = async (token) => {
   }
 }
 
-const logout = () => {
+const logout = (click) => {
+  axios.delete("http://localhost:3008/api/infoUser/" + localStorage.getItem('token'));
+
   localStorage.removeItem('token');
   localStorage.removeItem('infoUser');
+
+  if (click) {
+    window.location.reload();
+  }
 };
 
 const checkConnection = async () => {
@@ -76,7 +83,7 @@ const checkConnection = async () => {
       localStorage.setItem("infoUser", JSON.stringify(infoUser));
       isConnect.value = true;
     } else {
-      logout();
+      logout(false);
     }
   }
 }

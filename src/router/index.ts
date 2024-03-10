@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import UserConnexionVue from '@/components/connexion/UserConnexion.vue'
-import UserInscriptionVue from '@/components/connexion/UserInscription.vue'
+import UserLoginVue from '@/components/login/UserLogin.vue'
+import UserInscriptionVue from '@/components/login/UserInscription.vue'
 import { tokenValid } from '../js/utils.js'
 import AddMaterialVue from '@/views/AddMaterial.vue'
 
@@ -22,12 +22,12 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/connexion',
-      name: 'connexion',
+      path: '/login',
+      name: 'login',
       props: {
         isConnect: await tokenValid() // FAIRE UNE REQUETE AU PRES DU SERVEUR+6
       },
-      component: UserConnexionVue
+      component: UserLoginVue
     },
     {
       path: '/inscription',

@@ -1,8 +1,18 @@
 <template>
-    <div class="w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md  max-w-sm ">
+    <div class="w-full flex flex-col items-center justify-center bg-white text-black shadow-md rounded-md   ">
         <span class="mb-4 text-5xl font-medium m-10 ">Résa-Nature</span>
         <div class="w-full max-w-xs">
             <form class="flex flex-col items-start">
+
+                <label for="name" class="mb-2 text-gray-400">Name</label>
+                <input type="text" name="name" id="name"
+                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="username">
+
+                <label for="lastname" class="mb-2 text-gray-400">Lastname</label>
+                <input type="text" name="lastname" id="lastname"
+                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="lastname">
+
+
                 <label for="email" class="mb-2 text-gray-400">Email address</label>
                 <input type="text" name="email" id="email"
                     class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="email">
@@ -10,6 +20,10 @@
                 <label for="password" class="mb-2 text-gray-400">Password</label>
                 <input type="password" name="password" id="password"
                     class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="password">
+
+                <label for="phone" class="mb-2 text-gray-400">Phone Number</label>
+                <input type="text" name="phone" id="phone"
+                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="phone_number">
             </form>
         </div>
 
@@ -23,7 +37,7 @@
         </div>
 
         <div class="w-full flex justify-center h-12">
-            <button class="w-80 bg-purple-500 mb-2 rounded-md text-white h-8" @click="sendConnexion">Login</button>
+            <button class="w-80 bg-purple-500 mb-2 rounded-md text-white h-8" @click="sendInscription">Register</button>
         </div>
 
         <p class="border-solid  ">Or continue with</p>
@@ -61,11 +75,14 @@ import axios from 'axios'
 import { verifConnect } from '../../js/utils.js';
 
 export default {
-    name: "UserConnexion",
+    name: "UserInscription",
     date() {
         return {
+            username: "",
+            lastname: "",
             email: "",
             password: "",
+            phone_number: ""
         }
     },
     props: {
@@ -75,20 +92,27 @@ export default {
         }
     },
     methods: {
-        sendConnexion() {
+        sendInscription() {
             // console.log(data)
             // axios.get("http://localhost:3008").then(response => console.log(response.data))
 
             const data = new FormData();
+            data.append('name', this.username);
+            data.append('lastname', this.lastname);
             data.append('email', this.email);
             data.append('password', this.password);
+            data.append('phone_number', this.phone_number);
+
             try {
-                axios.post("http://localhost:3008/api/login", data).then(response => {
+                axios.post("http://localhost:3008/api/register", data).then(response => {
+                    console.log(response.data)
                     const { token, userId } = response.data;
 
                     // Stocke le token JWT et l'ID de l'utilisateur localement
                     localStorage.setItem('token', token);
-                    location.reload()
+                    // localStorage.setItem('userId', userId);
+                    this.$router.push('/login')
+
                 })
             } catch (error) {
                 console.log(error)
