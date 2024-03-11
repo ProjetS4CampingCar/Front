@@ -4,43 +4,49 @@
         <div class="w-full max-w-xs">
             <form class="flex flex-col items-start">
 
-                <label for="name" class="mb-2 text-gray-400">Name</label>
+                <label for="name" class="mb-2 text-gray-400">Prénom</label>
                 <input type="text" name="name" id="name"
-                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="username">
+                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="username"
+                    placeholder="Hugo">
 
-                <label for="lastname" class="mb-2 text-gray-400">Lastname</label>
+                <label for="lastname" class="mb-2 text-gray-400">Nom</label>
                 <input type="text" name="lastname" id="lastname"
-                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="lastname">
+                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="lastname"
+                    placeholder="Mandier">
 
 
-                <label for="email" class="mb-2 text-gray-400">Email address</label>
+                <label for="email" class="mb-2 text-gray-400">Adresse Mail</label>
                 <input type="text" name="email" id="email"
-                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="email">
+                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="email"
+                    placeholder="email@gmail.com">
 
-                <label for="password" class="mb-2 text-gray-400">Password</label>
+                <label for="password" class="mb-2 text-gray-400">Mot de Passe</label>
                 <input type="password" name="password" id="password"
-                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="password">
+                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="password"
+                    placeholder="*****************">
 
-                <label for="phone" class="mb-2 text-gray-400">Phone Number</label>
+                <label for="phone" class="mb-2 text-gray-400">Numéro de téléphone</label>
                 <input type="text" name="phone" id="phone"
-                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="phone_number">
+                    class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="phone_number"
+                    placeholder="0105060305">
             </form>
         </div>
 
         <div class="w-full max-w-xs flex justify-between m-2">
             <div class="flex justify-between space-x-2">
-                <span>Remember Me</span>
-                <input type="checkbox" id="cookie" name="cookie" value="cookie">
+                <span>Se Souvenir</span>
+                <input type="checkbox" id="cookie" name="cookie" value="cookie" v-model="rememberMe">
             </div>
 
-            <p class="text-indigo-600 font-medium">Forgot password?</p>
+            <p class="text-indigo-600 font-medium">Mot de passe oublié?</p>
         </div>
 
         <div class="w-full flex justify-center h-12">
-            <button class="w-80 bg-purple-500 mb-2 rounded-md text-white h-8" @click="sendInscription">Register</button>
+            <button class="w-80 bg-purple-500 mb-2 rounded-md text-white h-8"
+                @click="sendInscription">S'enregistrer</button>
         </div>
 
-        <p class="border-solid  ">Or continue with</p>
+        <p class="border-solid  ">Ou Continuer Avec</p>
 
         <a href="" class="flex items-center justify-center">
             <svg class="nz sb" aria-hidden="true" viewBox="0 0 24 24" width="24px" height="48px">
@@ -76,13 +82,14 @@ import { verifConnect } from '../../js/utils.js';
 
 export default {
     name: "UserInscription",
-    date() {
+    data() {
         return {
             username: "",
             lastname: "",
             email: "",
             password: "",
-            phone_number: ""
+            phone_number: "",
+            rememberMe: false
         }
     },
     props: {
@@ -92,38 +99,56 @@ export default {
         }
     },
     methods: {
-        sendInscription() {
+        validateEmail() {
+            // Expression régulière pour vérifier une adresse e-mail
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(this.email);
+        },
+        async sendInscription() {
             // console.log(data)
             // axios.get("http://localhost:3008").then(response => console.log(response.data))
+            if (this.validateEmail()) {
 
-            const data = new FormData();
-            data.append('name', this.username);
-            data.append('lastname', this.lastname);
-            data.append('email', this.email);
-            data.append('password', this.password);
-            data.append('phone_number', this.phone_number);
+                const data = new FormData();
+                data.append('email', this.email);
+                data.append('name', this.username);
+                data.append('lastname', this.lastname);
+                data.append('password', this.password);
+                data.append('phone_number', this.phone_number);
 
-            try {
-                axios.post("http://localhost:3008/api/register", data).then(response => {
-                    console.log(response.data)
-                    const { token, userId } = response.data;
+                try {
+                    axios.post("http://localhost:3008/api/register", data).then(async response => {
+                        if (response.data) {
+                            if (this.rememberMe) {
+                                // console.log(this.rememberMe)
+                                const response = await axios.post("http://localhost:3008/api/encryptCookie", data)
+                                const encryptemail = response.data
+                                this.setCookie('rememberMe', encryptemail, 30);
+                            }
+                            const { token, userId } = response.data;
+                            // Stocke le token JWT et l'ID de l'utilisateur localement
+                            localStorage.setItem('token', token);
 
-                    // Stocke le token JWT et l'ID de l'utilisateur localement
-                    localStorage.setItem('token', token);
+                            axios.post("http://localhost:3008/api/login", data).then(response => {
+                                const { token, userId } = response.data;
 
-                    axios.post("http://localhost:3008/api/login", data).then(response => {
-                        const { token, userId } = response.data;
-
-                        // Stocke le token JWT et l'ID de l'utilisateur localement
-                        localStorage.setItem('token', token);
-                        window.location.reload();
+                                // Stocke le token JWT et l'ID de l'utilisateur localement
+                                localStorage.setItem('token', token);
+                                window.location.reload();
+                            })
+                        }
                     })
-                })
-            } catch (error) {
-                console.log(error)
+                } catch (error) {
+                    console.log(error)
+                }
             }
-
-        }
+        },
+        setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        },
     },
     mounted() {
         verifConnect(this.isConnect);
