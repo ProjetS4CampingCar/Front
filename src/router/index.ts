@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import UserLoginVue from '@/components/login/UserLogin.vue'
 import UserInscriptionVue from '@/components/login/UserInscription.vue'
-import { tokenValid } from '../js/utils.js'
 import AddMaterialVue from '@/views/AddMaterial.vue'
 
 const router = createRouter({

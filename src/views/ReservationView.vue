@@ -38,7 +38,7 @@ async function makeReservation() {
   }
 
   // try to create a reservation
-  fetch("http://localhost:3008/api/reservation/", {
+  fetch("http://51.68.91.213:3008/api/reservation/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -60,7 +60,7 @@ async function makeReservation() {
 }
 
 async function getThreeFirstMaterials() {
-  let res = await fetch("http://localhost:3008/api/materials/")
+  let res = await fetch("http://51.68.91.213:3008/api/materials/")
   let value = await res.json();
   if (value.length >= 3) {
     articles.value = value.slice(0, 3);
@@ -89,16 +89,19 @@ getThreeFirstMaterials();
           </div>
         </fieldset>
 
-      <!-- Date picker -->
-        <label  class="mb-2" for="start">Debut de la reservation</label>
-        <input type="date" name="start" v-model=reservation.start class="w-full shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
-        <label  class="mb-2 " for="end">Fin de la reservation</label>
-        <input type="date" name="end" v-model=reservation.end class= "w-full shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
+        <!-- Date picker -->
+        <label class="mb-2" for="start">Debut de la reservation</label>
+        <input type="date" name="start" v-model=reservation.start
+          class="w-full shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
+        <label class="mb-2 " for="end">Fin de la reservation</label>
+        <input type="date" name="end" v-model=reservation.end
+          class="w-full shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4">
 
 
         <!-- Submit button -->
         <div class=" w-full flex flex-col items-center">
-          <button class="w-80 items-center bg-purple-500 mt-2 mb-2 rounded-md text-white h-8" type="submit">Reserver</button>
+          <button class="w-80 items-center bg-purple-500 mt-2 mb-2 rounded-md text-white h-8"
+            type="submit">Reserver</button>
         </div>
       </div>
     </form>
@@ -112,7 +115,7 @@ getThreeFirstMaterials();
       et finit le {{ reservationValidated.end }},
       pour un total de {{ reservationValidated.total_price }} euros.
     </p>
- 
+
   </main>
 </template>
 

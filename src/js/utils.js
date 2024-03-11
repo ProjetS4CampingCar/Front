@@ -13,7 +13,7 @@ async function tokenValid() {
   let res = false
   if (token) {
     try {
-      const response = await axios.post('http://localhost:3008/api/verifyToken', null)
+      const response = await axios.post('http://51.68.91.213:3008/api/verifyToken', null)
       res = response.data
     } catch (error) {
       console.log(error)

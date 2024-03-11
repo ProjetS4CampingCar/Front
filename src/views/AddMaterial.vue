@@ -34,7 +34,7 @@ function add() {
   }
 
   console.log(data)
-  axios.post("http://localhost:3008/api/materials", data, config).then(response => {
+  axios.post("http://51.68.91.213:3008/api/materials", data, config).then(response => {
     if (response.data) {
       console.log("Material créé: ", response.data);
       name.value = '';

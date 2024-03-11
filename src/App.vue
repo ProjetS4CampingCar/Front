@@ -43,7 +43,7 @@ const getInfoUser = async (token) => {
   };
 
   try {
-    const response = await axios.post("http://localhost:3008/api/infoUser", null, { headers });
+    const response = await axios.post("http://51.68.91.213:3008/api/infoUser", null, { headers });
     if (response.data.foundUser) {
       return response.data.foundUser;
     } else {
@@ -56,7 +56,7 @@ const getInfoUser = async (token) => {
 }
 
 const logout = (click) => {
-  axios.delete("http://localhost:3008/api/infoUser/" + localStorage.getItem('token'));
+  axios.delete("http://51.68.91.213:3008/api/infoUser/" + localStorage.getItem('token'));
 
   localStorage.removeItem('token');
   localStorage.removeItem('infoUser');

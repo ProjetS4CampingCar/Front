@@ -63,6 +63,7 @@
 <script>
 import axios from 'axios'
 import { verifConnect } from '../../js/utils.js';
+import { tokenValid } from '@/js/utils.js'
 
 export default {
     name: "UserConnexion",
@@ -82,7 +83,7 @@ export default {
         },
         async sendConnexion() {
             // console.log(data)
-            // axios.get("http://localhost:3008").then(response => console.log(response.data))
+            // axios.get("http://51.68.91.213:3008").then(response => console.log(response.data))
 
             if (this.validateEmail() && this.password) {
                 const data = new FormData();
@@ -90,13 +91,13 @@ export default {
                 data.append('password', this.password);
 
                 try {
-                    axios.post("http://localhost:3008/api/login", data).then(async response => {
+                    axios.post("http://51.68.91.213:3008/api/login", data).then(async response => {
 
 
                         if (response.data) {
                             if (this.rememberMe) {
                                 // console.log(this.rememberMe)
-                                const res = await axios.post("http://localhost:3008/api/encryptCookie", data)
+                                const res = await axios.post("http://51.68.91.213:3008/api/encryptCookie", data)
                                 const encryptemail = res.data
                                 this.setCookie('rememberMe', encryptemail, 30);
                             }
@@ -165,7 +166,7 @@ export default {
         async decryptCookie(cookie) {
             const data = new FormData();
             data.append('email', cookie);
-            const response = await axios.post("http://localhost:3008/api/decryptCookie", data)
+            const response = await axios.post("http://51.68.91.213:3008/api/decryptCookie", data)
             const decryptemail = response.data
             if (decryptemail) {
                 this.email = decryptemail

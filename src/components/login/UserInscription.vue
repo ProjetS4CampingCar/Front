@@ -79,6 +79,7 @@
 <script>
 import axios from 'axios'
 import { verifConnect } from '../../js/utils.js';
+import { tokenValid } from '@/js/utils.js'
 
 export default {
     name: "UserInscription",
@@ -100,7 +101,7 @@ export default {
         },
         async sendInscription() {
             // console.log(data)
-            // axios.get("http://localhost:3008").then(response => console.log(response.data))
+            // axios.get("http://51.68.91.213:3008").then(response => console.log(response.data))
             if (this.validateEmail()) {
 
                 const data = new FormData();
@@ -111,11 +112,11 @@ export default {
                 data.append('phone_number', this.phone_number);
 
                 try {
-                    axios.post("http://localhost:3008/api/register", data).then(async response => {
+                    axios.post("http://51.68.91.213:3008/api/register", data).then(async response => {
                         if (response.data) {
                             if (this.rememberMe) {
                                 // console.log(this.rememberMe)
-                                const response = await axios.post("http://localhost:3008/api/encryptCookie", data)
+                                const response = await axios.post("http://51.68.91.213:3008/api/encryptCookie", data)
                                 const encryptemail = response.data
                                 this.setCookie('rememberMe', encryptemail, 30);
                             }
@@ -123,7 +124,7 @@ export default {
                             // Stocke le token JWT et l'ID de l'utilisateur localement
                             localStorage.setItem('token', token);
 
-                            axios.post("http://localhost:3008/api/login", data).then(response => {
+                            axios.post("http://51.68.91.213:3008/api/login", data).then(response => {
                                 const { token, userId } = response.data;
 
                                 // Stocke le token JWT et l'ID de l'utilisateur localement
