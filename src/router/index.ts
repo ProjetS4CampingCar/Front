@@ -24,17 +24,11 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      props: {
-        isConnect: await tokenValid() // FAIRE UNE REQUETE AU PRES DU SERVEUR+6
-      },
       component: UserLoginVue
     },
     {
       path: '/inscription',
       name: 'inscription',
-      props: {
-        isConnect: await tokenValid()
-      },
       component: UserInscriptionVue
     },
     {

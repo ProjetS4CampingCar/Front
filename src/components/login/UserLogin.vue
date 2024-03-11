@@ -74,12 +74,6 @@ export default {
             error: false
         }
     },
-    props: {
-        isConnect: {
-            type: Boolean,
-            required: true
-        }
-    },
     methods: {
         validateEmail() {
             // Expression régulière pour vérifier une adresse e-mail
@@ -179,8 +173,8 @@ export default {
             }
         }
     },
-    mounted() {
-        verifConnect(this.isConnect);
+    async mounted() {
+        verifConnect(await tokenValid());
         const rememberMeCookieName = 'rememberMe';
         if (this.isCookiePresent(rememberMeCookieName)) {
             const cookie = this.getCookie('rememberMe')

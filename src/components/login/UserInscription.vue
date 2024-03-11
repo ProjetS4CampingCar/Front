@@ -92,12 +92,6 @@ export default {
             rememberMe: false
         }
     },
-    props: {
-        isConnect: {
-            type: Boolean,
-            required: true
-        }
-    },
     methods: {
         validateEmail() {
             // Expression régulière pour vérifier une adresse e-mail
@@ -150,8 +144,8 @@ export default {
             document.cookie = name + "=" + value + ";" + expires + ";path=/";
         },
     },
-    mounted() {
-        verifConnect(this.isConnect);
+    async mounted() {
+        verifConnect(await tokenValid());
     }
 }
 
