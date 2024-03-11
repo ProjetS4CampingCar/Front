@@ -2,37 +2,54 @@
 import axios from 'axios';
 import { ref } from 'vue';
 
+
 const name = ref('');
 const description = ref('');
 const price = ref('');
 const state = ref('');
 const cat = ref('');
-const errorMessage = ref('')
+const errorMessage = ref('');
+const file = ref(null)
+const lastid = ref('')
 
 function add() {
   if (!name.value || !description.value || !price.value || !state.value || !cat.value) {
     errorMessage.value = "Veuillez remplir tous les champs.";
     return;
   }
-  console.log(cat)
-  const data = {
-    name: name.value,
-    description: description.value,
-    price: price.value,
-    state: state.value,
-    category: cat.value
-  }
+
+
+  const data = new FormData();
+  data.append('name', name.value);
+  data.append('file', file.value.files[0]);
+  data.append('description', description.value);
+  data.append('price', price.value);
+  data.append('state', state.value);
+  data.append('category', cat.value);
+
+ const config ={
+  headers : {
+    enctype : "multipart/form-data"
+  }} 
+
   console.log(data)
-  axios.post("http://localhost:3008/api/materials", data).then(response => {
-    console.log("Material créé: ", response.data);
+  axios.post("http://localhost:3008/api/materials", data, config).then(response => {
+    if(response.data){
+      console.log("Material créé: ", response.data);
     name.value = '';
     description.value = '';
     price.value = '';
     state.value = '';
     cat.value = '';
     errorMessage.value = '';
-    alert("Matériel ajouté");
-    window.location.href = "./home"
+    lastid.value = response.data.id;
+    /*  alert("Matériel ajouté");
+    window.location.href = "./home" */
+    }else{
+      errorMessage.value = "Erreur lors de la création du matériel. Veuillez réessayer.";
+    }
+    
+   
   }).catch(error => {
     console.error("Erreur lors de la création du matériel: ", error);
     errorMessage.value = "Erreur lors de la création du matériel. Veuillez réessayer.";
@@ -47,14 +64,14 @@ function add() {
         <label class="mb-2 text-black-400"> Nom de l'objet : </label>
         <input class="tshadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='name' type='text' /> 
 
-      <label class="mb-2 text-black-400"> Description de l'objet : </label>
-      <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='description' />
+        <label class="mb-2 text-black-400"> Description de l'objet : </label>
+        <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='description' />
 
         <label class="mb-2 text-black-400"> Image de l'objet : </label>
-        <input class="w-full mb-1 text-black rounded-md h-8 px-4" type='file'/> 
+        <input class="w-full mb-1 text-black rounded-md h-8 px-4" ref="file" type='file' :name="lastid"/> 
 
-      <label class="mb-2 text-black-400"> Prix de la réservation à la journée : </label>
-      <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" type='number' v-model='price' />
+        <label class="mb-2 text-black-400"> Prix de la réservation à la journée : </label>
+        <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" type='number' v-model='price' />
 
         <label class="mb-2 text-black-400"> Catégorie : </label>
         <select class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='cat'>
