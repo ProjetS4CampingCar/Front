@@ -6,13 +6,13 @@
                 <label for="email" class="mb-2 text-gray-400">Adresse Mail</label>
                 <input type="text" name="email" id="email"
                     class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="email"
-                    placeholder="email@gmail.com">
+                    placeholder="email@gmail.com" autocomplete="current-password">
 
 
                 <label for="password" class="mb-2 text-gray-400">Mot de passe</label>
                 <input type="password" name="password" id="password"
                     class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="password"
-                    placeholder="*****************">
+                    placeholder="*****************" autocomplete="current-password">
                 <span v-if="error">Mot de passe/Adresse mail Incorrecte</span>
             </form>
         </div>
@@ -62,7 +62,9 @@
 
 <script>
 import axios from 'axios'
-import { verifConnect } from '../../js/utils.js';
+import { useRouter } from 'vue-router'
+import { verifConnect } from '@/js/utils.js';
+import { tokenValid } from '@/js/utils.js'
 
 export default {
     name: "UserConnexion",
@@ -72,12 +74,6 @@ export default {
             password: "",
             rememberMe: false,
             error: false
-        }
-    },
-    props: {
-        isConnect: {
-            type: Boolean,
-            required: true
         }
     },
     methods: {
@@ -97,7 +93,6 @@ export default {
 
                 try {
                     axios.post("http://localhost:3008/api/login", data).then(async response => {
-
 
                         if (response.data) {
                             if (this.rememberMe) {
@@ -179,8 +174,13 @@ export default {
             }
         }
     },
-    mounted() {
-        verifConnect(this.isConnect);
+    async mounted() {
+        const router = useRouter()
+
+        const token = await tokenValid();
+        await verifConnect(router, token);
+
+
         const rememberMeCookieName = 'rememberMe';
         if (this.isCookiePresent(rememberMeCookieName)) {
             const cookie = this.getCookie('rememberMe')

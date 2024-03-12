@@ -2,14 +2,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import UserLoginVue from '@/components/login/UserLogin.vue'
 import UserInscriptionVue from '@/components/login/UserInscription.vue'
-import { tokenValid } from '../js/utils.js'
 import AddMaterialVue from '@/views/AddMaterial.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/info8',
       name: 'home',
       component: HomeView
     },
@@ -22,23 +21,17 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/login',
+      path: '/info8/login',
       name: 'login',
-      props: {
-        isConnect: await tokenValid() // FAIRE UNE REQUETE AU PRES DU SERVEUR+6
-      },
       component: UserLoginVue
     },
     {
-      path: '/inscription',
+      path: '/info8//inscription',
       name: 'inscription',
-      props: {
-        isConnect: await tokenValid()
-      },
       component: UserInscriptionVue
     },
     {
-      path: '/reservation',
+      path: '/info8/reservation',
       name: 'reservation',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -46,7 +39,7 @@ const router = createRouter({
       component: () => import('../views/ReservationView.vue')
     },
     {
-      path: '/material/add',
+      path: '/info8/material/add',
       name: 'addmaterials',
       component: AddMaterialVue
     }

@@ -1,10 +1,10 @@
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 import axios from 'axios'
 
-function verifConnect(connect) {
-  const router = useRouter()
+function verifConnect(router, connect) {
   if (connect) {
-    router.push('/')
+    console.log('ca passe')
+    router.push('/info8')
   }
 }
 

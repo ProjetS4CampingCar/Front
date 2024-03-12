@@ -18,17 +18,17 @@
                 <label for="email" class="mb-2 text-gray-400">Adresse Mail</label>
                 <input type="text" name="email" id="email"
                     class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="email"
-                    placeholder="email@gmail.com">
+                    placeholder="email@gmail.com" autocomplete="current-password">
 
                 <label for="password" class="mb-2 text-gray-400">Mot de Passe</label>
                 <input type="password" name="password" id="password"
                     class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="password"
-                    placeholder="*****************">
+                    placeholder="*****************" autocomplete="current-password">
 
                 <label for="phone" class="mb-2 text-gray-400">Numéro de téléphone</label>
                 <input type="text" name="phone" id="phone"
                     class="shadow-inner border-b-2 w-full mb-2 text-black rounded-md h-12 px-4" v-model="phone_number"
-                    placeholder="0105060305">
+                    placeholder="0105060305" autocomplete="current-password">
             </form>
         </div>
 
@@ -78,7 +78,10 @@
 
 <script>
 import axios from 'axios'
-import { verifConnect } from '../../js/utils.js';
+import { useRouter } from 'vue-router'
+import { verifConnect } from '@/js/utils.js';
+import { tokenValid } from '@/js/utils.js'
+// import { router } from 'vue-router'
 
 export default {
     name: "UserInscription",
@@ -90,12 +93,6 @@ export default {
             password: "",
             phone_number: "",
             rememberMe: false
-        }
-    },
-    props: {
-        isConnect: {
-            type: Boolean,
-            required: true
         }
     },
     methods: {
@@ -118,25 +115,29 @@ export default {
 
                 try {
                     axios.post("http://localhost:3008/api/register", data).then(async response => {
-                        if (response.data) {
-                            if (this.rememberMe) {
-                                // console.log(this.rememberMe)
-                                const response = await axios.post("http://localhost:3008/api/encryptCookie", data)
-                                const encryptemail = response.data
-                                this.setCookie('rememberMe', encryptemail, 30);
-                            }
-                            const { token, userId } = response.data;
+
+
+                        const { token, userId } = response.data;
+                        // Stocke le token JWT et l'ID de l'utilisateur localement
+                        localStorage.setItem('token', token);
+
+                        axios.post("http://localhost:3008/api/login", data).then(response => {
+                            const { token } = response.data;
+
                             // Stocke le token JWT et l'ID de l'utilisateur localement
                             localStorage.setItem('token', token);
+                            // this.$router.push('/info8');
+                            window.location.reload();
+                        })
 
-                            axios.post("http://localhost:3008/api/login", data).then(response => {
-                                const { token, userId } = response.data;
 
-                                // Stocke le token JWT et l'ID de l'utilisateur localement
-                                localStorage.setItem('token', token);
-                                window.location.reload();
-                            })
+                        if (this.rememberMe) {
+                            // console.log(this.rememberMe)
+                            const response = await axios.post("http://localhost:3008/api/encryptCookie", data)
+                            const encryptemail = response.data
+                            this.setCookie('rememberMe', encryptemail, 30);
                         }
+
                     })
                 } catch (error) {
                     console.log(error)
@@ -150,8 +151,11 @@ export default {
             document.cookie = name + "=" + value + ";" + expires + ";path=/";
         },
     },
-    mounted() {
-        verifConnect(this.isConnect);
+    async mounted() {
+        const router = useRouter()
+
+        const token = await tokenValid()
+        await verifConnect(router, token);
     }
 }
 
