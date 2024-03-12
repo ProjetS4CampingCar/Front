@@ -54,6 +54,8 @@
   import axios from 'axios';
   
   export default {
+
+    name:'afficheMateriaux',
     data() {
       return {
         materials: [],
@@ -61,6 +63,8 @@
       };
     },
     mounted() {
+console.log("ca passe")
+
       axios.get("http://localhost:3008/api/materials")
         .then(response => {
           this.materials = response.data;
