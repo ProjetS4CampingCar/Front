@@ -11,6 +11,8 @@
         <RouterLink v-else to="/info8">Accueil</RouterLink>
         <RouterLink to="/info8/material/add">Ajouter un materiel</RouterLink>
         <RouterLink to="/info8/reservation">Reserver du materiel</RouterLink>
+        <RouterLink to="/info8/afficheMateriaux">Voir les Matériaux</RouterLink>
+
         <div v-if="isConnect">
           <a @click="logout(true)">Déconnexion</a> <br>
           <h2 class="mb-4 text-1xl font-medium m-10"> Bonjour {{ username }} {{ userLastname }}</h2>
