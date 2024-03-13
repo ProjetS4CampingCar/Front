@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-tertiary grid grid-flow-rows grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-2">
+    <div class="bg-primary5 grid grid-flow-rows grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-2">
       <div
         class="flex flex-row relative"
         :class="{ 'col-span-2': clickedElement === id}"
@@ -16,24 +16,24 @@
         
           <img class="rounded max-w-40 sm:max-w-48 z-10" src="C:\Users\jojoe\Documents\USMB\Project\S4\logo\RentaVan\bleu\logo.png" alt="test" />
   
-          <div v-if="clickedElement != id" class="font-medium text-textColor1 hover:text-hoverColor cursor-pointer ">
+          <div v-if="clickedElement != id" class="font-medium text-black hover:text-accent cursor-pointer ">
             {{ material.name }}
           </div>
-          <div v-if="clickedElement != id" class="text-textColor2">
+          <div v-if="clickedElement != id" class="text-black">
             {{ material.price }}€/j
           </div>
         </div>
         
         <!-- Description content -->
         <div>
-          <div v-if="clickedElement === id" class="font-medium text-textColor1 hover:text-hoverColor cursor-pointer">
+          <div v-if="clickedElement === id" class="font-medium text-textColor1 hover:text-accent cursor-pointer">
               {{ material.name }}
           </div>
-          <div v-if="clickedElement === id" class="text-textColor2">
+          <div v-if="clickedElement === id" class="text-black">
               {{ material.price }}€/j
           </div>
   
-          <div v-if="clickedElement === id" class="text-textColor1">
+          <div v-if="clickedElement === id" class="text-text70">
               Description : 
               {{ material.description }}
           </div>
@@ -85,17 +85,12 @@ console.log("ca passe")
         // Logique pour déterminer le nombre de colonnes en fonction de la largeur de l'écran
         const screenWidth = window.innerWidth;
         if (screenWidth < 640) {
-          console.log("2");
-          return 2; 
-          
+          return 2;   
         } else if (screenWidth < 1024) {
-          console.log("3");
           return 3; 
         } else if (screenWidth < 1280) {
-          console.log("4");
           return 4; 
         } else {
-          console.log("5");
           return 5; 
         }
       },
