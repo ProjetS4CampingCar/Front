@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import UserLoginVue from '@/components/login/UserLogin.vue'
 import UserInscriptionVue from '@/components/login/UserInscription.vue'
 import AddMaterialVue from '@/views/AddMaterial.vue'
+import TestEl from '@/components/elements/TestElement.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +43,11 @@ const router = createRouter({
       path: '/material/add',
       name: 'addmaterials',
       component: AddMaterialVue
+    },
+    {
+      path: '/elements',
+      name: 'testel',
+      component: TestEl
     }
   ]
 })
