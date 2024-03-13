@@ -10,7 +10,7 @@ const state = ref('');
 const cat = ref('');
 const errorMessage = ref('');
 const file = ref(null)
-const lastid = ref('')
+
 
 function add() {
   if (!name.value || !description.value || !price.value || !state.value || !cat.value) {
@@ -33,7 +33,6 @@ function add() {
     }
   }
 
-  console.log(data)
   axios.post("http://localhost:3008/api/materials", data, config).then(response => {
     if (response.data) {
       console.log("Material créé: ", response.data);
@@ -43,9 +42,8 @@ function add() {
       state.value = '';
       cat.value = '';
       errorMessage.value = '';
-      lastid.value = response.data.id;
-      /*  alert("Matériel ajouté");
-      window.location.href = "./home" */
+      file.value = null
+      alert("Matériel ajouté avec succès \nL'identifiant de cet objet est : "+response.data.id);
     } else {
       errorMessage.value = "Erreur lors de la création du matériel. Veuillez réessayer.";
     }
@@ -63,16 +61,16 @@ function add() {
     <h3 class="mb-4 text-3xl font-medium m-10">Ajouter un objet</h3>
     <div class="flex flex-col items-start w-full">
       <label class="mb-2 text-black-400"> Nom de l'objet : </label>
-      <input class="tshadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='name' type='text' />
+      <input class="tshadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='name' type='text' placeholder="Tente" />
 
       <label class="mb-2 text-black-400"> Description de l'objet : </label>
-      <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='description' />
+      <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='description' placeholder="2 places, confortable"/>
 
       <label class="mb-2 text-black-400"> Image de l'objet : </label>
-      <input class="w-full mb-1 text-black rounded-md h-8 px-4" ref="file" type='file' :name="lastid" />
+      <input class="w-full mb-1 text-black rounded-md h-8 px-4" ref="file" type='file' />
 
       <label class="mb-2 text-black-400"> Prix de la réservation à la journée : </label>
-      <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" type='number' v-model='price' />
+      <input class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" type='number' v-model='price' placeholder="4" />
 
       <label class="mb-2 text-black-400"> Catégorie : </label>
       <select class="shadow-inner border-b-2 w-full mb-1 text-black rounded-md h-8 px-4" v-model='cat'>

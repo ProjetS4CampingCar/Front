@@ -10,6 +10,7 @@
         <RouterLink v-if="!isConnect" to="/login">Connexion</RouterLink>
         <RouterLink v-else to="/">Accueil</RouterLink>
         <RouterLink to="/material/add">Ajouter un materiel</RouterLink>
+        <RouterLink to="/material/modify">Modifier un materiel</RouterLink>
         <RouterLink to="/reservation">Reserver du materiel</RouterLink>
         <div v-if="isConnect">
           <a @click="logout(true)">Déconnexion</a> <br>
