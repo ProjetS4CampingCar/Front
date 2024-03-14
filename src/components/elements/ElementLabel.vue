@@ -1,5 +1,5 @@
 <template>
-    <label>{{ text }}</label>
+    <label class="block">{{ text }}</label>
   </template>
   
   <script>
