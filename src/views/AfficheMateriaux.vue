@@ -1,53 +1,49 @@
 <template>
-    <div class="bg-primary5 grid grid-flow-rows grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-2">
-      <div
-        class="flex flex-row relative"
-        :class="{ 'col-span-2': clickedElement === id}"
-        v-for="(material, id) in materials"
-        :key="id"
+  <div class="bg-primary5 flex flex-wrap gap-y-4 p-1 justify-center sm:justify-start">
+    <div
+    class="flex flex-col sm:flex-row sm:duration-700 ease-in-out "
+    :class="clickedElement === id ? getWidth()  : 'md:w-1/3 lg:w-1/4 xl:w-1/5 '"
+      v-for="(material, id) in materials"
+      :key="id"
+      :id="`material-${id}`"
+    >
+      <!-- Main content -->
+      <div 
+      class="flex flex-col sm:flex-row sm:block items-center sm:items-right justify-center px-4 border-buttonColor text-black duration-500"
+    :class="{ 'hover:scale-95 sm:border-l-4 ': clickedElement !== id, 'px-0 sm:pr-4': clickedElement === id}"
+    @click="toggleDescription(id)"
       >
-        
-        <!-- Main content -->
-        <div 
-          class="max-w-64 px-4 border-l-4 border-buttonColor box-content text-black  relative flex-col duration-500"
-          :class="{ 'hover:scale-95': clickedElement !== id, 'sm:border-l-0 sm:px-0 sm:pr-4': clickedElement === id}"
-          @click="toggleDescription(id)"
-        >
-        
-          <img class="rounded max-w-40 sm:max-w-48 z-10" src="C:\Users\jojoe\Documents\USMB\Project\S4\logo\RentaVan\bleu\logo.png" alt="test" />
-  
-          <div v-if="clickedElement != id" class="font-medium text-black hover:text-accent cursor-pointer ">
+        <img class="rounded max-w-48 z-10 " src="C:\Users\jojoe\Documents\USMB\Project\S4\logo\RentaVan\bleu\logo.png" alt="test" />
+        <router-link :to="{ name: 'AfficheMateriel', params: { id: id }}" class="">
+          <div v-if="clickedElement != id" class="font-medium text-black hover:text-accent cursor-pointer">
             {{ material.name }}
           </div>
-          <div v-if="clickedElement != id" class="text-black">
-            {{ material.price }}€/j
-          </div>
-        </div>
-        
-        <!-- Description content -->
-        <div>
-          <div v-if="clickedElement === id" class="font-medium text-textColor1 hover:text-accent cursor-pointer">
-              {{ material.name }}
-          </div>
-          <div v-if="clickedElement === id" class="text-black">
-              {{ material.price }}€/j
-          </div>
-  
-          <div v-if="clickedElement === id" class="text-text70">
-              Description : 
-              {{ material.description }}
-          </div>
-        </div>
-        
-        <!-- Texte en position absolue à droite -->
-        <div v-if=" (id+2)%getNbCols() === 0 && id !== materials.length - 1" class="absolute top-[60px] -right-40 text-sm text-gray-500 px-2">
-          <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 7V8.2C20 9.88016 20 10.7202 19.673 11.362C19.3854 11.9265 18.9265 12.3854 18.362 12.673C17.7202 13 16.8802 13 15.2 13H4M4 13L8 9M4 13L8 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        </router-link>
+        <div v-if="clickedElement != id" class="text-black">
+          {{ material.price }}€/j
         </div>
       </div>
+      
+      <!-- Description content -->
+      <div class="max-w-full">
+        <router-link :to="{ name: 'AfficheMateriel', params: { id: id }}" class="">
+          <div v-if="clickedElement === id" class="font-medium text-textColor1 hover:text-accent cursor-pointer
+          flex justify-center sm:block">
+            {{ material.name }}
+          </div>
+        </router-link>
+        <div v-if="clickedElement === id" class="text-black flex justify-center sm:block" >
+          {{ material.price }}€/j
+        </div>
+        <div v-if="clickedElement === id" class="text-text70 flex justify-center sm:block">
+          Description: {{ material.description }}
+        </div>
+      </div>
+      
     </div>
-  </template>
+  </div>
+</template>
+
   
   
   <script>
@@ -63,7 +59,6 @@
       };
     },
     mounted() {
-console.log("ca passe")
 
       axios.get("http://localhost:3008/api/materials")
         .then(response => {
@@ -76,16 +71,19 @@ console.log("ca passe")
     methods: {
       toggleDescription(id) {
         this.clickedElement = this.clickedElement === id ? null : id;
+        const element = document.getElementById(`material-${id}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       },
-      isEndOfRow(id) {
-        var numCols = getNbCols(); // Change this to match your number of columns
-        return (id + 1) % numCols === 0;
-      },
-      getNbCols() {
+      getWidth() {
+      return `w-2/${this.getNbCols()} sm:pr-5 `;
+    },
+    getNbCols() {
         // Logique pour déterminer le nombre de colonnes en fonction de la largeur de l'écran
         const screenWidth = window.innerWidth;
         if (screenWidth < 640) {
-          return 2;   
+          return 1;   
         } else if (screenWidth < 1024) {
           return 3; 
         } else if (screenWidth < 1280) {

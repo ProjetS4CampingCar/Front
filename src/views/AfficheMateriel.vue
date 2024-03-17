@@ -1,54 +1,54 @@
 <template>
-<div> {{ materiel.name }}</div>
+  <div>
+    <div class="flex flex-col sm:flex-row	border-b pb-2 h-1/2">
+      <div class="sm:w-1/3 sm:border-r sm:mr-2">
+        <img class=" sm:rounded-br-lg w-full" src="C:\Users\jojoe\Documents\USMB\Project\S4\logo\RentaVan\bleu\logo.png" alt="test" />
+        <div class="pl-2">
+          <div class="flex justify-between pr-2">
+          <div class="uppercase">{{ materiel.name }}</div>
+          <div>{{ materiel.price }}€/j</div>
+          </div>
+          <div>{{ materiel.description }}</div>
+        </div>
+      </div>
+      <div class="bg-secondary flex-1 flex justify-center ">
+        <p>TEMPLATE LOCATION </p>
+      </div>
+    </div>
+    <div>
+      <afficheMateriaux/>
+    </div>
+  </div>
 </template>
-  
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-  name:'afficheMateriel',
-    data() {
-      return {
-        materiel: [],
-        clickedElement: null,
-      };
-    },
-    mounted() {
-      axios.get("http://localhost:3008/api/materials")
-        .then(response => {
-          this.materials = response.data;
-        })
-        .catch(error => {
-          console.error('Error fetching materials:', error);
-        });
-    },
-    methods: {
-      toggleDescription(id) {
-        this.clickedElement = this.clickedElement === id ? null : id;
-      },
-      isEndOfRow(id) {
-        var numCols = getNbCols(); // Change this to match your number of columns
-        return (id + 1) % numCols === 0;
-      },
-      getNbCols() {
-        // Logique pour déterminer le nombre de colonnes en fonction de la largeur de l'écran
-        const screenWidth = window.innerWidth;
-        if (screenWidth < 640) {
-          console.log("2");
-          return 2; 
-          
-        } else if (screenWidth < 1024) {
-          console.log("3");
-          return 3; 
-        } else if (screenWidth < 1280) {
-          console.log("4");
-          return 4; 
-        } else {
-          console.log("5");
-          return 5; 
-        }
-      },
-    },
-  };
-  </script>
+
+<script>
+import axios from 'axios';
+import afficheMateriaux from '@/views/AfficheMateriaux.vue'; 
+
+export default {
+  components: {
+    afficheMateriaux,
+  },
+  name: 'afficheMateriel',
+  data() {
+    return {
+      materiel: {name: "Nom du matériel",
+        price: 50, // Prix simulé en euros par jour
+        description: "Description du matériel simulé."},
+    };
+  },
+  mounted() {
+    window.scrollTo(0, 0);
+    // Fetch the specific material using the ID from the route parameter
+    const id = this.$route.params.id;
+    axios.get(`http://localhost:3008/api/materials/${id}`)
+      .then(response => {
+        this.materiel = response.data;
+        
+      })
+      .catch(error => {
+        console.error('Error fetching material:', error);
+      });
+  },
+};
+</script>
