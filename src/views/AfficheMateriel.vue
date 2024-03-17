@@ -1,17 +1,17 @@
 <template>
   <div>
-    <div class="flex flex-col sm:flex-row	border-b pb-2 h-1/2">
-      <div class="sm:w-1/3 sm:border-r sm:mr-2">
-        <img class=" sm:rounded-br-lg w-full" src="C:\Users\jojoe\Documents\USMB\Project\S4\logo\RentaVan\bleu\logo.png" alt="test" />
-        <div class="pl-2">
+    <div class="flex flex-col md:flex-row	border-b pb-2 ">
+      <div class="md:w-1/3 md:border-r md:mr-2">
+        <img class=" md:rounded-br-lg w-full" src="C:\Users\jojoe\Documents\USMB\Project\S4\logo\RentaVan\bleu\logo.png" alt="test" />
+        <div class="pl-2 h-1/3">
           <div class="flex justify-between pr-2">
           <div class="uppercase">{{ materiel.name }}</div>
           <div>{{ materiel.price }}€/j</div>
           </div>
-          <div>{{ materiel.description }}</div>
+          <div class="inline-block">{{ materiel.description }}</div>
         </div>
       </div>
-      <div class="bg-secondary flex-1 flex justify-center ">
+      <div class="bg-secondary flex-1 flex justify-center h-[80vh]">
         <p>TEMPLATE LOCATION </p>
       </div>
     </div>

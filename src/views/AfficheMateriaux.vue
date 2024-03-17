@@ -73,7 +73,9 @@
         this.clickedElement = this.clickedElement === id ? null : id;
         const element = document.getElementById(`material-${id}`);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
         }
       },
       getWidth() {
