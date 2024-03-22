@@ -5,8 +5,6 @@ import UserInscriptionVue from '@/components/login/UserInscription.vue'
 import AddMaterialVue from '@/views/AddMaterial.vue'
 import MaterialsView from '@/views/MaterialsView.vue'
 import ModifyMaterial from '@/views/ModifyMaterial.vue'
-import AfficheMateriaux from '@/views/AfficheMateriaux.vue'
-import AfficheMateriel from '@/views/AfficheMateriel.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,18 +57,7 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: ModifyMaterial
-    },
-    {
-        path: '/info8/material/show',
-        name: 'afficheMateriaux',
-        component: AfficheMateriaux
-    },
-    {
-      path: '/info8/afficheMateriaux/:id',
-      name: 'AfficheMateriel',
-      component: AfficheMateriel,
-      props: true // This allows route params to be sent as props to the component
-    } ]
+    }]
 })
 
 export default router

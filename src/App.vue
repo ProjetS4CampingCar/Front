@@ -1,28 +1,45 @@
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/camping_car.png" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="Nom du projet"></HelloWorld>
-
-      <nav>
-        <RouterLink v-if="!isConnect" to="/info8/inscription">Inscription</RouterLink>
-        <RouterLink v-if="!isConnect" to="/info8/login">Connexion</RouterLink>
-        <RouterLink v-else to="/info8">Accueil</RouterLink>
-        <RouterLink to="/info8/material/add">Ajouter un materiel</RouterLink>
-        <RouterLink to="/info8/reservation">Reserver du materiel</RouterLink>
-        <RouterLink to="/info8/afficheMateriaux">Voir les Matériaux</RouterLink>
-        <RouterLink to="/info8/material/modify">Modifier un materiel</RouterLink>
+  <header class="z-10 w-screen h-auto bg-[#483A65] fixed text-white flex flex-wrap items-center phone:justify-center md:justify-between md:p-0">
+    <div class="w-100 flex items-center" >
+    <img alt="Vue logo" class="logo" src="@/assets/logo.png" width="125" height="125" />
+        <h1 class="text-3xl font-medium ">ResaNature</h1>
+    </div>
+    <div>
+      <nav class="phone:mb-4 xl:mb-0 xl:mr-8">
+        <RouterLink class="transition duration-300 hover:transition hover:duration-300 hover:bg-[#dfa3f5]/25" v-if="!isConnect" to="/info8/inscription">Inscription</RouterLink>
+        <RouterLink class="transition duration-300 hover:transition hover:duration-300 hover:bg-[#dfa3f5]/25" v-if="!isConnect" to="/info8/login">Connexion</RouterLink>
+        <RouterLink class="transition duration-300 hover:transition hover:duration-300 hover:bg-[#dfa3f5]/25" v-else to="/info8">Accueil</RouterLink>
+        <RouterLink class="transition duration-300 hover:transition hover:duration-300 hover:bg-[#dfa3f5]/25" to="/info8/material/add">Ajouter un materiel</RouterLink>
+        <RouterLink class="transition duration-300 hover:transition hover:duration-300 hover:bg-[#dfa3f5]/25" to="/info8/reservation">Reserver du materiel</RouterLink>
+        <RouterLink class="transition duration-300 hover:transition hover:duration-300 hover:bg-[#dfa3f5]/25" to="/info8/afficheMateriaux">Voir les Matériaux</RouterLink>
+        <RouterLink class="transition duration-300 hover:transition hover:duration-300 hover:bg-[#dfa3f5]/25" to="/info8/material/modify">Modifier un materiel</RouterLink>
         <div v-if="isConnect">
           <a @click="logout(true)">Déconnexion</a> <br>
           <h2 class="mb-4 text-1xl font-medium m-10"> Bonjour {{ username }} {{ userLastname }}</h2>
         </div>
-
-
-
       </nav>
     </div>
   </header>
+  <div class="h-screen bg-no-repeat bg-cover" style="background-image: url('../src/assets/bg.jpg');">
+    <div class="phone:h-[42vh] sm:h-[57vh] phone:w-[70vw] xl:w-[20vw] bg-[#483A65] flex flex-col items-center rounded-md block absolute phone:top-[40vh] xl:top-[30vh] right-[15vw]">
+      <h3 class="text-white font-medium text-xl mb-5 mt-5">Rechercher</h3>
+     
+      <input type="text" class="w-56 p-1 text-white bg-transparent border-b border-white focus:border-b placeholder-white" placeholder="Votre recherche">
+      <div class = "w-56 m-2">
+        <label for="begin" class="text-white">Date de début</label>
+        <input type="date"  class="w-56 p-1 text-white bg-transparent border-b border-white focus:border-b placeholder-white" name="begin" placeholder="Votre date de début">
+      </div>
+      <div class = "w-56 m-2">
+        <label for="end" class="text-white" >Fin de début</label>
+        <input type="date"  class="w-56 p-1 text-white bg-transparent border-b border-white focus:border-b placeholder-white" name="end" placeholder="Votre date de fin">
+      </div>
+      <div class = "w-56 m-2">
+        <label for="price" class="text-white">Prix</label>
+        <input type="number"  class="w-56 p-1 text-white bg-transparent border-b border-white focus:border-b placeholder-white" name="price" placeholder="Votre prix moyen ">
+      </div>
+      <button class="bg-indigo-900 p-2 px-8 text-white font-medium shadow rounded-xl mt-4 ">Chercher</button>
+    </div>
+  </div>
   <RouterView />
 
 </template>
@@ -97,25 +114,22 @@ onMounted(checkConnection);
 </script>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
 
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
 .logo {
-  display: block;
+
   margin: 0 auto 2rem;
 }
 
-nav {
+ nav {
   width: 100%;
-  font-size: 12px;
   text-align: center;
-  margin-top: 2rem;
 }
-
+ 
 nav a.router-link-exact-active {
-  color: gray;
+  color: rgb(205, 178, 217);
 }
 
 nav a.router-link-exact-active:hover {
@@ -125,7 +139,7 @@ nav a.router-link-exact-active:hover {
 nav a {
   display: inline-block;
   padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  border-left: 1px solid white;
 }
 
 nav a:first-of-type {
@@ -133,11 +147,6 @@ nav a:first-of-type {
 }
 
 @media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
 
   .logo {
     margin: 0 2rem 0 0;
@@ -149,13 +158,5 @@ nav a:first-of-type {
     flex-wrap: wrap;
   }
 
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
 }
-</style>./components/utils.js
+</style>

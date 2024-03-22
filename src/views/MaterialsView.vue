@@ -68,7 +68,7 @@ export default {
 
         axios.get("http://localhost:3008/api/materials")
             .then(response => {
-                this.materials = response.data;
+                this.materials = response.data["test"];
             })
             .catch(error => {
                 console.error('Error fetching materials:', error);
