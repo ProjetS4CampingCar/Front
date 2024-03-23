@@ -4,6 +4,7 @@ import QrGen from '../components/qr-code/QrGen.vue'
 import QrRead from '../components/qr-code/QrRead.vue'
 
 const value = ref<string>("");
+const genValue = ref<string>("Salut, est ce que ce super QR code te plait ?")
 
 function printValue(v: string): void {
   value.value = v;
@@ -12,7 +13,7 @@ function printValue(v: string): void {
 
 <template>
   <main>
-    <QrGen value="salut comment tu vas" level="L" renderAs='canvas'></QrGen>
+    <QrGen :value="genValue" level="M" renderAs='canvas'></QrGen>
     <QrRead @detection="printValue"></QrRead>
     {{ value }}
   </main>
