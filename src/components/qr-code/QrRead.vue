@@ -4,11 +4,71 @@ import { ref } from 'vue'
 
 async function onDetect(detectedValues: unknown): Promise<void> {
   console.log(detectedValues);
-  detect.value = "det !"
+  detect.value = detectedValues
 }
 
 const err = ref<string>("");
-const detect = ref<string>("");
+const detect = ref<unknown>(null);
+
+
+/*** track functons ***/
+
+function paintOutline(detectedCodes: any, ctx: any) {
+  for (const detectedCode of detectedCodes) {
+    const [firstPoint, ...otherPoints] = detectedCode.cornerPoints
+
+    ctx.strokeStyle = 'red'
+
+    ctx.beginPath()
+    ctx.moveTo(firstPoint.x, firstPoint.y)
+    for (const { x, y } of otherPoints) {
+      ctx.lineTo(x, y)
+    }
+    ctx.lineTo(firstPoint.x, firstPoint.y)
+    ctx.closePath()
+    ctx.stroke()
+  }
+}
+function paintBoundingBox(detectedCodes: any, ctx:any) {
+  for (const detectedCode of detectedCodes) {
+    const {
+      boundingBox: { x, y, width, height }
+    } = detectedCode
+
+    ctx.lineWidth = 2
+    ctx.strokeStyle = '#007bff'
+    ctx.strokeRect(x, y, width, height)
+  }
+}
+function paintCenterText(detectedCodes:any, ctx:any) {
+  for (const detectedCode of detectedCodes) {
+    const { boundingBox, rawValue } = detectedCode
+
+    const centerX = boundingBox.x + boundingBox.width / 2
+    const centerY = boundingBox.y + boundingBox.height / 2
+
+    const fontSize = Math.max(12, (50 * boundingBox.width) / ctx.canvas.width)
+
+    ctx.font = `bold ${fontSize}px sans-serif`
+    ctx.textAlign = 'center'
+
+    ctx.lineWidth = 3
+    ctx.strokeStyle = '#35495e'
+    ctx.strokeText(detectedCode.rawValue, centerX, centerY)
+
+    ctx.fillStyle = '#5cb984'
+    ctx.fillText(rawValue, centerX, centerY)
+  }
+}
+const trackFunctionOptions = [
+  { text: 'nothing (default)', value: undefined },
+  { text: 'outline', value: paintOutline },
+  { text: 'centered text', value: paintCenterText },
+  { text: 'bounding box', value: paintBoundingBox }
+]
+const trackFunctionSelected = ref(trackFunctionOptions[1])
+
+
 
 function onError(error: { name: string }): void {
   if (error.name === 'NotAllowedError') {
@@ -43,8 +103,15 @@ function onError(error: { name: string }): void {
   <main>
     <p>Error : {{ err }}</p>
     <p>detect : {{ detect }}</p>
-    <QrcodeStream constraints="environment" @detect="onDetect" @error="onError"></QrcodeStream>
+    <div id="cam">
+      <QrcodeStream constraints="environment" @detect="onDetect" @error="onError" :track="trackFunctionSelected.value"></QrcodeStream>
+    </div>
   </main>
 </template>
 
-<style></style>
+<style>
+#cam {
+  height: 10rem;
+  width: 10rem;
+}
+</style>
