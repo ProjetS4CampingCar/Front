@@ -23,8 +23,11 @@
       </nav>
     </div>
   </header>
+
+
   <RouterView />
 
+  <shopping></shopping>
 </template>
 
 <script setup lang="ts">
@@ -33,6 +36,7 @@ import HelloWorld from './components/HelloWorld.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { tokenValid } from "./js/utils.js";
+import shopping from "./components/shopping/Shopping.vue"
 
 const isConnect = ref(false);
 const username = ref("");
