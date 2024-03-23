@@ -2,18 +2,38 @@
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { ref } from 'vue'
 
-async function onDetect(detectedValues: unknown): Promise<void> {
-  console.log(detectedValues);
-  detect.value = detectedValues
+const emit = defineEmits<{
+  detection: [value: string]
+}>()
+
+type fromScan = Array<{
+  boundingBox: {
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    top: number,
+    right: number,
+    bottom: number,
+    left: number
+  },
+  rawValue: string,
+  format: string,
+  cornerPoints: Array<{ x: number, y: number }>,
+}>
+
+type TrackFunction = (detectedCodes: fromScan, ctx: CanvasRenderingContext2D) => void;
+type TrackOption = { text: string, value: TrackFunction | undefined };
+
+
+/*** dedection ***/
+async function onDetect(detectedCodes: fromScan): Promise<void> {
+  const rawValue = detectedCodes[0].rawValue;
+  emit("detection", rawValue);
 }
 
-const err = ref<string>("");
-const detect = ref<unknown>(null);
-
-
 /*** track functons ***/
-
-function paintOutline(detectedCodes: any, ctx: any) {
+function paintOutline(detectedCodes: fromScan, ctx: CanvasRenderingContext2D) {
   for (const detectedCode of detectedCodes) {
     const [firstPoint, ...otherPoints] = detectedCode.cornerPoints
 
@@ -29,7 +49,7 @@ function paintOutline(detectedCodes: any, ctx: any) {
     ctx.stroke()
   }
 }
-function paintBoundingBox(detectedCodes: any, ctx:any) {
+function paintBoundingBox(detectedCodes: fromScan, ctx: CanvasRenderingContext2D): void {
   for (const detectedCode of detectedCodes) {
     const {
       boundingBox: { x, y, width, height }
@@ -40,34 +60,16 @@ function paintBoundingBox(detectedCodes: any, ctx:any) {
     ctx.strokeRect(x, y, width, height)
   }
 }
-function paintCenterText(detectedCodes:any, ctx:any) {
-  for (const detectedCode of detectedCodes) {
-    const { boundingBox, rawValue } = detectedCode
 
-    const centerX = boundingBox.x + boundingBox.width / 2
-    const centerY = boundingBox.y + boundingBox.height / 2
-
-    const fontSize = Math.max(12, (50 * boundingBox.width) / ctx.canvas.width)
-
-    ctx.font = `bold ${fontSize}px sans-serif`
-    ctx.textAlign = 'center'
-
-    ctx.lineWidth = 3
-    ctx.strokeStyle = '#35495e'
-    ctx.strokeText(detectedCode.rawValue, centerX, centerY)
-
-    ctx.fillStyle = '#5cb984'
-    ctx.fillText(rawValue, centerX, centerY)
-  }
-}
-const trackFunctionOptions = [
+const trackFunctionOptions: Array<TrackOption> = [
   { text: 'nothing (default)', value: undefined },
   { text: 'outline', value: paintOutline },
-  { text: 'centered text', value: paintCenterText },
   { text: 'bounding box', value: paintBoundingBox }
 ]
-const trackFunctionSelected = ref(trackFunctionOptions[1])
 
+/*** error ***/
+const err = ref<string>("");
+const trackFunctionSelected = ref<TrackOption>(trackFunctionOptions[1])
 
 
 function onError(error: { name: string }): void {
@@ -97,21 +99,22 @@ function onError(error: { name: string }): void {
     err.value = "browser seems to be lacking features";
   }
 }
+
 </script>
 
 <template>
   <main>
-    <p>Error : {{ err }}</p>
-    <p>detect : {{ detect }}</p>
+    {{ err }}
     <div id="cam">
-      <QrcodeStream constraints="environment" @detect="onDetect" @error="onError" :track="trackFunctionSelected.value"></QrcodeStream>
+      <QrcodeStream constraints="environment" @detect="onDetect" @error="onError" :track="trackFunctionSelected.value">
+      </QrcodeStream>
     </div>
   </main>
 </template>
 
 <style>
 #cam {
-  height: 10rem;
-  width: 10rem;
+  height: 15rem;
+  width: 15rem;
 }
 </style>

@@ -12,18 +12,22 @@ withDefaults(defineProps<{
   foreground?: string
   // Background color in hexa default is white
   background?: string
+  // Define how much wide the quiet zone should be.
+  margin?: number
 }>(), {
   level: 'M',
   renderAs: 'svg',
   foreground: '#000000',
-  background: '#ffffff'
+  background: '#ffffff',
+  margin: 1
 })
 
 </script>
 
 <template>
   <main>
-    <qrcode-vue :value="value" :level="level" :render-as="renderAs" :background="background" :foreground="foreground" />
+    <qrcode-vue :value="value" :level="level" :render-as="renderAs" :background="background" :foreground="foreground"
+      :margin="margin" />
   </main>
 </template>
 
