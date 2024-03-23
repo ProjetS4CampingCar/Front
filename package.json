@@ -17,6 +17,7 @@
     "multer": "^1.4.5-lts.1",
     "pinia": "^2.1.7",
     "qrcode": "^1.5.3",
+    "qrcode.vue": "^3.4.1",
     "socket.io-client": "^4.7.4",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
