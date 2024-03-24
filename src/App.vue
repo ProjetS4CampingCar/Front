@@ -21,7 +21,7 @@
     </div>
   </header>
   <div class="h-screen bg-no-repeat bg-cover" style="background-image: url('../src/assets/bg.jpg');">
-    <div class="phone:h-[42vh] sm:h-[57vh] phone:w-[70vw] xl:w-[20vw] bg-[#483A65] flex flex-col items-center rounded-md block absolute phone:top-[40vh] xl:top-[30vh] right-[15vw]">
+    <div class="h-[57vh] phone:w-[70vw] xl:w-[20vw] bg-[#483A65] flex flex-col items-center rounded-md block absolute phone:top-[40vh] xl:top-[30vh] right-[15vw]">
       <h3 class="text-white font-medium text-xl mb-5 mt-5">Rechercher</h3>
      
       <input type="text" class="w-56 p-1 text-white bg-transparent border-b border-white focus:border-b placeholder-white" placeholder="Votre recherche">
